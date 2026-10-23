@@ -20,7 +20,14 @@
   #left { left: 10px; width: 310px; }
   #right { right: 10px; width: 300px; }
   .toggles { padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1px solid var(--line); }
-  h1 { margin: 0 0 4px; font-size: 15px; }
+  h1 { margin: 0; font-size: 15px; }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .panel-title { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .panel-body { margin-top: 6px; }
+  .fold { flex: none; width: 24px; height: 24px; padding: 0; font: inherit; font-size: 15px; line-height: 22px; color: var(--ink);
+    background: #fff; border: 1px solid var(--line); border-radius: 4px; cursor: pointer; }
+  #left.collapsed, #right.collapsed { width: auto; }
+  .panel.collapsed .panel-body { display: none; }
   h2 { margin: 12px 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
     color: var(--muted); }
   p { margin: 0; color: var(--muted); }
@@ -50,6 +57,8 @@
   @media (max-width: 760px) {
     #left, #right { left: 8px; right: 8px; width: auto; max-height: 40vh; }
     #right { top: auto; bottom: 30px; }
+    #left.collapsed { right: auto; }
+    #right.collapsed { left: auto; right: 52px; }
   }
 </style>
 </head>
@@ -57,27 +66,31 @@
 <div id="map"></div>
 <div id="frame"></div>
 <section id="left" class="panel">
-  <h1>nisar-water viewer</h1>
-  <p id="description"></p>
-  <h2>Example</h2>
-  <select id="example"></select>
-  <h2>Site</h2>
-  <select id="site"></select>
-  <div id="dates"></div>
-  <div id="info"></div>
+  <div class="panel-head"><h1>nisar-water viewer</h1><button class="fold" type="button"></button></div>
+  <div class="panel-body">
+    <p id="description"></p>
+    <h2>Example</h2>
+    <select id="example"></select>
+    <h2>Site</h2>
+    <select id="site"></select>
+    <div id="dates"></div>
+    <div id="info"></div>
+  </div>
 </section>
 <section id="right" class="panel">
-  <h2>Layers</h2>
-  <div class="toggles">
-    <label class="row"><input type="checkbox" id="notwater"> show not-water <span class="note">(not-water shown as white)</span></label>
-    <label class="row"><input type="checkbox" id="outlines" checked> show site outlines</label>
+  <div class="panel-head"><span class="panel-title">Layers</span><button class="fold" type="button"></button></div>
+  <div class="panel-body">
+    <div class="toggles">
+      <label class="row"><input type="checkbox" id="notwater"> show not-water <span class="note">(not-water shown as white)</span></label>
+      <label class="row"><input type="checkbox" id="outlines" checked> show site outlines</label>
+    </div>
+    <div id="layers"></div>
+    <h2>Basemap</h2>
+    <div id="basemaps"></div>
+    <h2>Legend</h2>
+    <div id="legend"></div>
+    <button id="png" class="action">Save PNG</button>
   </div>
-  <div id="layers"></div>
-  <h2>Basemap</h2>
-  <div id="basemaps"></div>
-  <h2>Legend</h2>
-  <div id="legend"></div>
-  <button id="png" class="action">Save PNG</button>
 </section>
 <script type="module">
 import * as maplibregl from 'https://cdn.jsdelivr.net/npm/maplibre-gl@6.13.0/dist/maplibre-gl.mjs';
@@ -777,6 +790,19 @@ async function start() {
     if (e.key === 'ArrowRight') step(1);
   });
 }
+
+function setCollapsed(panel, collapsed) {
+  const button = panel.querySelector('.fold');
+  panel.classList.toggle('collapsed', collapsed);
+  button.textContent = collapsed ? '+' : '−';
+  button.title = collapsed ? 'Show panel' : 'Hide panel';
+  button.setAttribute('aria-expanded', String(!collapsed));
+}
+
+document.querySelectorAll('.panel').forEach(panel => {
+  panel.querySelector('.fold').onclick = () => setCollapsed(panel, !panel.classList.contains('collapsed'));
+  setCollapsed(panel, window.innerWidth <= 760);
+});
 
 map.on('load', start);
 </script>
