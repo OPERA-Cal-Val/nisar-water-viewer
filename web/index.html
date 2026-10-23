@@ -19,7 +19,7 @@
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3); }
   #left { left: 10px; width: 310px; }
   #right { right: 10px; width: 300px; }
-  .toggle { padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1px solid var(--line); }
+  .toggles { padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1px solid var(--line); }
   h1 { margin: 0 0 4px; font-size: 15px; }
   h2 { margin: 12px 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
     color: var(--muted); }
@@ -68,7 +68,10 @@
 </section>
 <section id="right" class="panel">
   <h2>Layers</h2>
-  <label class="row toggle"><input type="checkbox" id="notwater"> show not-water <span class="note">(not-water shown as white)</span></label>
+  <div class="toggles">
+    <label class="row"><input type="checkbox" id="notwater"> show not-water <span class="note">(not-water shown as white)</span></label>
+    <label class="row"><input type="checkbox" id="outlines" checked> show site outlines</label>
+  </div>
   <div id="layers"></div>
   <h2>Basemap</h2>
   <div id="basemaps"></div>
@@ -147,7 +150,7 @@ const BASEMAPS = {
 };
 
 const state = {examples: [], example: null, catalog: null, site: null, scene: null,
-  on: new Set(['nisar_water']), basemap: 'esri', notWater: false, overlays: []};
+  on: new Set(['nisar_water']), basemap: 'esri', notWater: false, outlines: true, overlays: []};
 
 const $ = id => document.getElementById(id);
 const el = (tag, props = {}, ...children) => {
@@ -358,6 +361,12 @@ function drawBasemap() {
   map.addLayer({id: 'basemap', type: 'raster', source: 'basemap'}, map.getStyle().layers[1]?.id);
 }
 
+const SITE_LAYERS = ['sites-fill', 'sites-line', 'site-selected', 'site-points'];
+
+function drawOutlines() {
+  SITE_LAYERS.filter(id => map.getLayer(id)).forEach(id => map.setLayoutProperty(id, 'visibility', state.outlines ? 'visible' : 'none'));
+}
+
 function siteFeatures() {
   return {type: 'FeatureCollection', features: state.catalog.sites.map(s => ({type: 'Feature', properties: {site_id: s.id},
     geometry: {type: 'Point', coordinates: [(s.bbox[0] + s.bbox[2]) / 2, (s.bbox[1] + s.bbox[3]) / 2]}}))};
@@ -418,6 +427,7 @@ function renderLayerPanel() {
     return el('label', {className: 'row'}, radio, base.name);
   }));
   $('notwater').checked = state.notWater;
+  $('outlines').checked = state.outlines;
 }
 
 function legendEntries() {
@@ -528,6 +538,7 @@ function writeHash() {
     on: [...state.on].join(','),
     bm: state.basemap,
     nw: state.notWater ? '1' : '0',
+    ol: state.outlines ? '1' : '0',
     map: `${map.getZoom().toFixed(2)}/${center.lat.toFixed(5)}/${center.lng.toFixed(5)}`,
   });
   history.replaceState(null, '', `#${params}`);
@@ -535,6 +546,7 @@ function writeHash() {
 
 function refresh() {
   drawOverlays();
+  drawOutlines();
   renderLayerPanel();
   renderLegend();
   renderDates();
@@ -736,6 +748,7 @@ async function start() {
   if (hash.on !== undefined) state.on = new Set(hash.on.split(',').filter(Boolean));
   if (BASEMAPS[hash.bm]) state.basemap = hash.bm;
   state.notWater = hash.nw === '1';
+  state.outlines = hash.ol !== '0';
   try {
     state.examples = await fetchJson('examples.json');
   } catch (error) {
@@ -746,6 +759,7 @@ async function start() {
   $('example').onchange = e => selectExample(e.target.value);
   $('site').onchange = e => selectSite(e.target.value, true);
   $('notwater').onchange = e => { state.notWater = e.target.checked; refresh(); };
+  $('outlines').onchange = e => { state.outlines = e.target.checked; refresh(); };
   $('png').onclick = savePng;
   placeFrame();
   window.addEventListener('resize', placeFrame);

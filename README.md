@@ -53,6 +53,7 @@ pixi run site             # assemble site/: exactly what GitHub Pages serves
 **Colours and the not-water toggle:**
 - Colours match GIBS, so the same class looks the same in every layer: open water blue, inundated vegetation green, HAND-masked light grey.
 - Not-water is hidden by default so the imagery shows through. **show not-water** (top of the layer panel) draws it as white in every water layer.
+- **show site outlines** (just below it) hides the yellow site perimeters and markers, for clean views and PNGs. Both settings are kept in the URL.
 
 **How DSWx-HLS, DSWx-S1 and Sentinel-1 dates are chosen.** For each NISAR scene **and each site** (sites of a time-series example can be far apart, so each gets its own dates):
 1. **Candidates:** every date within ±7 days with a granule touching the site, from a public CMR search.
