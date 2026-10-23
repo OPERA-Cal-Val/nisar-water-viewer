@@ -1,0 +1,93 @@
+[project]
+authors = [{name = "Charlie Marshak", email = "charlie.z.marshak@jpl.nasa.gov"}]
+name = "nisar-water-viewer"
+description = "A small web viewer comparing nisar-water with OPERA DSWx products"
+requires-python = ">= 3.12"
+version = "0.1.0"
+
+[project.urls]
+Homepage = "https://opera-cal-val.github.io/nisar-water-viewer/"
+Repository = "https://github.com/OPERA-Cal-Val/nisar-water-viewer"
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "linux-64"]
+
+[tool.pixi.dependencies]
+python = "3.12.*"
+click = ">=8.5.0,<9"
+gdal = ">=3.13.3,<4"
+geopandas = ">=1.2.0,<2"
+pyarrow = ">=25.0.0,<26"
+awscli = ">=2.36.21,<3"
+jupyterlab = ">=4.6.4,<5"
+jupyter-collaboration = ">=5.0.4,<6"
+ruff = ">=0.17.2,<0.18"
+
+[tool.pixi.tasks]
+lint = "ruff check ."
+format = "ruff format ."
+collect = "python main.py collect"
+build = "python main.py build"
+site = "python main.py site"
+upload = "python main.py upload"
+serve = "python main.py serve"
+lab = "jupyter lab"
+
+[tool.ruff]
+line-length = 120
+src = ["."]
+exclude = [
+    ".eggs",
+    ".git",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "build",
+    "dist",
+    "site-packages",
+    "notebooks/*",
+]
+indent-width = 4
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+
+[tool.ruff.lint]
+select = [
+    "F",   # flake8: https://docs.astral.sh/ruff/rules/#flake8-f
+    "E",   # flake8: https://docs.astral.sh/ruff/rules/#flake8-e
+    "I",   # isort: https://docs.astral.sh/ruff/rules/#isort-i
+    "UP",  # pyupgrade: https://docs.astral.sh/ruff/rules/#pyupgrade-up
+    "D",   # pydocstyle: https://docs.astral.sh/ruff/rules/#pydocstyle-d
+    "ANN", # annotations: https://docs.astral.sh/ruff/rules/#flake8-annotations-ann
+    "PTH", # use-pathlib-pth: https://docs.astral.sh/ruff/rules/#flake8-use-pathlib-pth
+    "TRY", # tryceratops
+    "Q",   # flake8-quotes: https://docs.astral.sh/ruff/rules/#flake8-quotes-q
+]
+ignore = [
+    "D100",   # Missing docstring in public module
+    "D101",   # Missing docstring in public class
+    "D102",   # Missing docstring in public method
+    "D103",   # Missing docstring in public function
+    "D104",   # Missing docstring in public package
+    "D105",   # Missing docstring in magic method
+    "D203",   # 1 blank line required before class docstring
+    "D213",   # Multi-line docstring summary should start at the second line
+    "TRY003", # Avoid specifying long messages outside the exception
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+
+[tool.ruff.lint.isort]
+case-sensitive = true
+lines-after-imports = 2

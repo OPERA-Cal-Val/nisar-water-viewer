@@ -1,0 +1,39 @@
+[site]
+pages_url = "https://opera-cal-val.github.io/nisar-water-viewer/"
+data = "pages"
+
+[bucket]
+name = "nisar-water-viewer"
+region = "us-west-2"
+
+[examples.validation]
+title = "Validation sites"
+description = "UMD validation chips with Good NISAR GCOV: nisar-water vs DSWx-NI, with the DSWx-HLS and DSWx-S1 granules used in verification."
+kind = "sites"
+
+[examples.validation.sources]
+nisar_water = "../nisar-water/examples/validation"
+dswx_ni = "../DSWx-Requirement-Verification-v2/data/DSWx-NIopen water maps for calibration sites20261005053839/calval_openwater/Good"
+tables = [
+    "../DSWx-Requirement-Verification-v2/src/dswx_req/data/umd_chips.geojson",
+    "../DSWx-Requirement-Verification-v2/dswx_out_analysis/2026/ni_table.parquet",
+    "../DSWx-Requirement-Verification-v2/dswx_out_analysis/2026/products.parquet",
+    "../DSWx-Requirement-Verification-v2/dswx_out_analysis/2026/results.parquet",
+]
+
+[examples.congaree]
+title = "Congaree National Park Wilderness, SC"
+description = "Ascending and descending nisar-water time series over the Congaree floodplain forest, with DSWx-NI on 2026-10-07 and 2026-10-08."
+kind = "timeseries"
+
+[examples.congaree.sources]
+nisar_water = "../nisar-water/examples/congaree"
+dswx_ni = "~/Desktop/congaree_opera_dswx-ni"
+
+[examples.oregon_lakes]
+title = "Summer Lake and Lake Abert, OR"
+description = "Ascending and descending nisar-water time series over two shallow, fluctuating lakes."
+kind = "timeseries"
+
+[examples.oregon_lakes.sources]
+nisar_water = "../nisar-water/examples/oregon_lakes"
