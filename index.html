@@ -77,6 +77,7 @@ const PAGES_URL = filled('https://opera-cal-val.github.io/nisar-water-viewer/');
 const DATA_URL = filled('');
 const BASE = DATA_URL || (location.protocol === 'file:' ? PAGES_URL : new URL('.', location.href).href);
 const GIBS = 'gibs.earthdata.nasa.gov/wmts/epsg3857/best';
+const VEDA = 'openveda.cloud/api/titiler-cmr/rasterio/tiles/WebMercatorQuad/{z}/{x}/{y}.png';
 const DIRECTIONS = {A: 'Ascending', D: 'Descending'};
 
 const CLASSES = {
@@ -96,6 +97,21 @@ const LAYERS = [
     layer: 'NISAR_L2_Geocoded_Polarimetric_Covariance'},
   {key: 'rtc_s1', name: 'Sentinel-1 RTC', kind: 'gibs', level: 12, maxzoom: 12, png: [3, 6],
     note: 'false colour, R/B: VV, G: VH', layer: 'OPERA_L2_Radiometric_Terrain_Corrected_SAR_Sentinel-1'},
+  {key: 'hls_rgb', name: 'HLS RGB', kind: 'gibs', level: 12, maxzoom: 12, png: [3, 6], dateFrom: 'dswx_hls',
+    note: 'true colour on the DSWx-HLS date; Sentinel-2 (S30) drawn over Landsat 8/9 (L30)',
+    layers: ['HLS_L30_Nadir_BRDF_Adjusted_Reflectance', 'HLS_S30_Nadir_BRDF_Adjusted_Reflectance']},
+  {key: 'hls_ndvi', name: 'HLS NDVI', kind: 'titiler', dateFrom: 'dswx_hls', rescale: '-1,1', colormap: 'brbg',
+    note: 'NDVI −1 brown → +1 green, on the DSWx-HLS date (NASA VEDA titiler-cmr, as in Worldview)',
+    recipes: [
+      {collection: 'C2021957657-LPCLOUD', assets: ['B05', 'B04'], regex: 'B[0-9][0-9]', expression: '(B05-B04)/(B05+B04)'},
+      {collection: 'C2021957295-LPCLOUD', assets: ['B08', 'B04'], regex: 'B[0-9][0-9A-Za-z]', expression: '(B08-B04)/(B08+B04)'},
+    ]},
+  {key: 'hls_ndwi', name: 'HLS NDWI', kind: 'titiler', dateFrom: 'dswx_hls', rescale: '-1,1', colormap: 'gnbu',
+    note: 'NDWI (green − NIR) −1 pale → +1 dark blue, on the DSWx-HLS date (NASA VEDA titiler-cmr, as in Worldview)',
+    recipes: [
+      {collection: 'C2021957657-LPCLOUD', assets: ['B03', 'B05'], regex: 'B[0-9][0-9]', expression: '(B03-B05)/(B03+B05)'},
+      {collection: 'C2021957295-LPCLOUD', assets: ['B03', 'B08'], regex: 'B[0-9][0-9A-Za-z]', expression: '(B03-B08)/(B03+B08)'},
+    ]},
   {key: 'dswx_hls', name: 'DSWx-HLS', kind: 'gibs', level: 12, maxzoom: 12, png: [3], water: true,
     layer: 'OPERA_L3_Dynamic_Surface_Water_Extent-HLS', classes: ['not_water', 'open_water', 'partial', 'snow', 'cloud']},
   {key: 'dswx_s1', name: 'DSWx-S1', kind: 'gibs', level: 12, maxzoom: 12, png: [3], water: true,
@@ -115,7 +131,7 @@ const BASEMAPS = {
 };
 
 const state = {examples: [], example: null, catalog: null, site: null, scene: null,
-  on: new Set(['nisar_water']), basemap: 'esri', notWater: false};
+  on: new Set(['nisar_water']), basemap: 'esri', notWater: false, overlays: []};
 
 const $ = id => document.getElementById(id);
 const el = (tag, props = {}, ...children) => {
@@ -129,6 +145,8 @@ const rgb = c => `rgb(${CLASSES[c].rgb.join(',')})`;
 const sceneOf = key => state.catalog?.scenes[key];
 const currentScene = () => sceneOf(state.scene);
 const layerOf = key => LAYERS.find(l => l.key === key);
+const gibsNames = layer => layer.layers ?? [layer.layer];
+const gibsHit = (layer, scene) => scene.gibs[layer.dateFrom ?? layer.key];
 const hasLayer = key => layerOf(key).kind !== 'cog' || Object.values(state.catalog?.scenes ?? {}).some(s => s[key]);
 const version = path => path?.split('/')[1];
 const compactTime = iso => iso.replace(/[-:]/g, '');
@@ -181,7 +199,7 @@ async function cropTile(bytes, up, x, y, layer, clearWhite) {
 
 async function gibsTile(params, abort, clearWhite) {
   const [, root, z, y, x] = params.url.match(/^gibs\w*:\/\/(.+)\/(\d+)\/(\d+)\/(\d+)\.png$/).map((v, i) => i > 1 ? Number(v) : v);
-  const layer = LAYERS.find(l => root.includes(`/${l.layer}/`));
+  const layer = LAYERS.find(l => l.kind === 'gibs' && gibsNames(l).some(name => root.includes(`/${name}/`)));
   try {
     for (let up = 0; up <= 3 && z - up >= 0; up++) {
       const bytes = await fetchPng(`https://${root}/${z - up}/${y >> up}/${x >> up}.png`, layer.png, abort.signal);
@@ -194,7 +212,19 @@ async function gibsTile(params, abort, clearWhite) {
   return {data: blankTile()};
 }
 
+async function vedaTile(params, abort) {
+  try {
+    const response = await fetch(params.url.replace('veda://', 'https://'), {signal: abort.signal});
+    if (response.status !== 200) return {data: blankTile()};
+    return {data: await createImageBitmap(await response.blob())};
+  } catch (error) {
+    if (abort.signal.aborted) throw error;
+    return {data: blankTile()};
+  }
+}
+
 maplibregl.addProtocol('cog', MaplibreCOGProtocol.cogProtocol);
+maplibregl.addProtocol('veda', vedaTile);
 maplibregl.addProtocol('gibs', (params, abort) => gibsTile(params, abort, false));
 maplibregl.addProtocol('gibsclear', (params, abort) => gibsTile(params, abort, true));
 
@@ -224,34 +254,57 @@ const map = new maplibregl.Map({
 map.addControl(new maplibregl.NavigationControl({showCompass: false}), 'bottom-right');
 map.addControl(new maplibregl.ScaleControl(), 'bottom-left');
 
-function sourceFor(layer, scene) {
+function sourcesFor(layer, scene) {
   if (layer.kind === 'cog') {
-    if (!scene[layer.key]) return null;
+    if (!scene[layer.key]) return [];
     const url = new URL(`${state.example}/${scene[layer.key]}`, BASE).href;
     MaplibreCOGProtocol.setColorFunction(url, colorFunction(lookupTable(layer)));
-    return {type: 'raster', url: `cog://${url}`, tileSize: 256};
+    return [{type: 'raster', url: `cog://${url}`, tileSize: 256}];
   }
-  const hit = scene.gibs[layer.key];
-  if (!hit?.date) return null;
+  const hit = gibsHit(layer, scene);
+  if (!hit?.date) return [];
+  if (layer.kind === 'titiler') {
+    return layer.recipes.map(recipe => ({
+      type: 'raster', tileSize: 256, minzoom: 7, maxzoom: 12, attribution: 'NASA VEDA titiler-cmr: HLS',
+      tiles: [`veda://${VEDA}?${vedaParams(layer, recipe, hit.date)}`],
+    }));
+  }
   const protocol = layer.water && !state.notWater ? 'gibsclear' : 'gibs';
-  const path = `${layer.layer}/default/${hit.date}/GoogleMapsCompatible_Level${layer.level}/{z}/{y}/{x}.png`;
-  return {type: 'raster', tiles: [`${protocol}://${GIBS}/${path}`], tileSize: 256, maxzoom: layer.maxzoom,
-    attribution: 'NASA GIBS: OPERA, NISAR'};
+  return gibsNames(layer).map(name => ({
+    type: 'raster', tileSize: 256, maxzoom: layer.maxzoom, attribution: 'NASA GIBS: OPERA, NISAR, HLS',
+    tiles: [`${protocol}://${GIBS}/${name}/default/${hit.date}/GoogleMapsCompatible_Level${layer.level}/{z}/{y}/{x}.png`],
+  }));
+}
+
+function vedaParams(layer, recipe, date) {
+  return new URLSearchParams([
+    ['collection_concept_id', recipe.collection],
+    ['temporal', `${date}T00:00:00Z/${date}T23:59:59Z`],
+    ...recipe.assets.map(asset => ['assets', asset]),
+    ['assets_regex', recipe.regex],
+    ['asset_as_band', 'true'],
+    ['expression', recipe.expression],
+    ['rescale', layer.rescale],
+    ['colormap_name', layer.colormap],
+  ]);
 }
 
 function drawOverlays() {
-  LAYERS.forEach(({key}) => {
-    if (map.getLayer(key)) map.removeLayer(key);
-    if (map.getSource(key)) map.removeSource(key);
+  state.overlays.forEach(id => {
+    if (map.getLayer(id)) map.removeLayer(id);
+    if (map.getSource(id)) map.removeSource(id);
   });
+  state.overlays = [];
   const scene = currentScene();
   if (!scene) return;
   LAYERS.filter(l => state.on.has(l.key) && hasLayer(l.key)).forEach(layer => {
-    const source = sourceFor(layer, scene);
-    if (!source) return;
-    map.addSource(layer.key, source);
-    map.addLayer({id: layer.key, type: 'raster', source: layer.key,
-      paint: {'raster-resampling': layer.water ? 'nearest' : 'linear', 'raster-fade-duration': 0}}, 'sites-line');
+    sourcesFor(layer, scene).forEach((source, i) => {
+      const id = `${layer.key}-${i}`;
+      map.addSource(id, source);
+      map.addLayer({id, type: 'raster', source: id,
+        paint: {'raster-resampling': layer.water ? 'nearest' : 'linear', 'raster-fade-duration': 0}}, 'sites-line');
+      state.overlays.push(id);
+    });
   });
 }
 
@@ -298,14 +351,15 @@ function layerWhen(layer, scene) {
     if (!path) return layer.key === 'nisar_water' ? 'not processed' : 'no product';
     return `${scene.date} · ${version(path)}`;
   }
-  const hit = scene.gibs[layer.key];
+  const hit = gibsHit(layer, scene);
   if (!hit?.date) return `no coverage ±${hit?.window_days ?? 7} d`;
-  if (hit.coverage === undefined) return hit.date;
+  if (hit.days === undefined) return hit.date;
+  if (hit.coverage === undefined || layer.dateFrom) return `${hit.date} (${signed(hit.days)})`;
   return `${hit.date} (${signed(hit.days)}, ${Math.round(hit.coverage * 100)}%)`;
 }
 
 function layerAvailable(layer, scene) {
-  return Boolean(scene && (layer.kind === 'cog' ? scene[layer.key] : scene.gibs[layer.key]?.date));
+  return Boolean(scene && (layer.kind === 'cog' ? scene[layer.key] : gibsHit(layer, scene)?.date));
 }
 
 function renderLayerPanel() {
@@ -504,7 +558,7 @@ function containsCenter(bbox) {
 
 function layerTokens(layer, scene) {
   if (layer.key === 'nisar_water' || layer.frame) return [scene.frame_id, compactTime(scene.acq_utc)];
-  const items = layer.key === 'dswx_ni' ? scene.dswx_ni_tiles : scene.gibs[layer.key]?.granules ?? [];
+  const items = layer.key === 'dswx_ni' ? scene.dswx_ni_tiles : gibsHit(layer, scene)?.granules ?? [];
   const item = items.find(i => containsCenter(i.bbox)) ?? items[0];
   return item ? nameParts(item.name) : [];
 }
