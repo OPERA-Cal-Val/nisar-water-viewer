@@ -5,7 +5,9 @@
 A single-page map for comparing **nisar-water** with OPERA **DSWx-NI**, **DSWx-HLS** and **DSWx-S1**, over Esri or Google satellite imagery, with NISAR GCOV and Sentinel-1 backdrops.
 
 - **Your products** (nisar-water and DSWx-NI) are small Cloud-Optimized GeoTIFFs (COGs) published next to the page on GitHub Pages, or in an S3 bucket. The browser reads only the blocks it needs.
-- **Streamed from NASA:** DSWx-HLS, DSWx-S1, Sentinel-1 RTC and the NISAR GCOV false-colour composite come from [NASA GIBS](https://nasa-gibs.github.io/gibs-api-docs/) as dated map tiles, with no login and nothing stored.
+- **Streamed from NASA, with no login and nothing stored:**
+  - DSWx-HLS, DSWx-S1, Sentinel-1 RTC, HLS true colour and the NISAR GCOV false-colour composite come from [NASA GIBS](https://nasa-gibs.github.io/gibs-api-docs/) as dated map tiles.
+  - HLS NDVI and NDWI are computed on request by NASA VEDA's [titiler-cmr](https://openveda.cloud/api/titiler-cmr/api.html).
 - **One file:** the whole viewer is `web/index.html`, with no build step and no server code.
 
 ## Setup
@@ -43,6 +45,8 @@ pixi run site             # assemble site/: exactly what GitHub Pages serves
 | DSWx-HLS | GIBS `OPERA_L3_Dynamic_Surface_Water_Extent-HLS` | best-covered date within ±7 days (below) |
 | DSWx-S1 | GIBS `OPERA_L3_Dynamic_Surface_Water_Extent-Sentinel-1` | best-covered date within ±7 days |
 | Sentinel-1 RTC | GIBS `OPERA_L2_Radiometric_Terrain_Corrected_SAR_Sentinel-1` | best-covered date within ±7 days; VV/VH false colour |
+| HLS RGB | GIBS `HLS_S30_…` over `HLS_L30_Nadir_BRDF_Adjusted_Reflectance` | true colour on the DSWx-HLS date; whichever sensor imaged the site shows |
+| HLS NDVI / NDWI | NASA VEDA titiler-cmr (`openveda.cloud/api/titiler-cmr`), the service Worldview uses | computed on request from HLS L30/S30 bands on the DSWx-HLS date, with Worldview's recipes: NDVI `(NIR−red)/(NIR+red)` in brown→green, NDWI `(green−NIR)/(green+NIR)` in pale→dark blue, both stretched −1…+1; drawn from zoom 7 |
 | NISAR GCOV RGB | GIBS `NISAR_L2_Geocoded_Polarimetric_Covariance` | same date as nisar-water; co-pol (HH) red/blue, cross-pol (HV) green; ~150 m |
 
 **Colours and the not-water toggle:**
@@ -91,7 +95,18 @@ For example:
 
 ## Publishing
 
-The page goes on GitHub Pages: code on `main`, and the contents of `site/` on a `gh-pages` branch. Where the data lives is one setting in `examples.toml`:
+The site is deployed by a GitHub Action (`.github/workflows/pages.yml`):
+
+| Branch | Holds |
+|---|---|
+| `main` | the code, including `web/index.html` |
+| `gh-pages` | the catalogs and COGs, i.e. the contents of `site/` after `pixi run site` |
+
+A push to either branch rebuilds the site: `index.html` from `main`, the data from `gh-pages`. So:
+- **viewer changes** → push `main`;
+- **new data** → `pixi run collect && pixi run build && pixi run site`, then commit and push `site/` (its own git repo) to `gh-pages`.
+
+Where the data lives is one setting in `examples.toml`:
 
 ```toml
 [site]
@@ -99,9 +114,7 @@ pages_url = "https://opera-cal-val.github.io/nisar-water-viewer/"
 data = "pages"      # "pages": data served next to index.html; "s3": data read from [bucket]
 ```
 
-**`data = "pages"` (default):**
-- `pixi run site` puts the data in `site/`. It's about 500 MB today, against GitHub Pages' 1 GB limit.
-- Nothing else is needed.
+**`data = "pages"` (default):** the data goes in `site/`. It's about 500 MB today, against GitHub Pages' 1 GB limit.
 
 **`data = "s3"`:**
 - `site/` holds only `index.html`, and `pixi run upload` syncs `build/` to the bucket.
@@ -109,11 +122,9 @@ data = "pages"      # "pages": data served next to index.html; "s3": data read f
 
 Everything published is readable by anyone with the URL, including DSWx-NI and unreleased nisar-water runs.
 
-**After new data:** `pixi run collect && pixi run build && pixi run site`, then commit and push `site/` to `gh-pages`.
-
 **People who want to change the viewer:**
 1. Clone the repo and run `pixi install`.
-2. Copy the published site into `build/` (for example with `git clone -b gh-pages <repo> build`).
+2. Get the published data with `git clone -b gh-pages --depth 1 <repo> build`.
 3. Run `pixi run serve` and edit `web/index.html`; changes show on the next reload.
 
 ## Where the data comes from
@@ -198,7 +209,8 @@ catalog.py      joins -> catalog.json, sites.geojson
 opera.py        CMR search + coverage-based choice of DSWx-HLS / DSWx-S1 / RTC-S1 dates
 gibs.py         GIBS tiles: fetch, validate, decode, coverage of a polygon
 rasters.py      gdal.Warp -> EPSG:3857 COG on the web-map tile grid
-pages.py        assemble site/ for GitHub Pages
+pages.py        assemble site/ (the gh-pages branch)
 web/index.html  the viewer (MapLibre GL + maplibre-cog-protocol from a CDN)
+.github/workflows/pages.yml   deploy main + gh-pages to GitHub Pages
 notebooks/      the joins, step by step
 ```

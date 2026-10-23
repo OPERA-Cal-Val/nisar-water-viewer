@@ -1,0 +1,65 @@
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main, gh-pages]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the viewer (main)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: code
+
+      - name: Check out the published catalogs and COGs (gh-pages)
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: data
+
+      - name: Assemble the site
+        run: |
+          mkdir site
+          rsync -a --exclude .git --exclude .github data/ site/
+          python3 - <<'EOF'
+          import tomllib
+          from pathlib import Path
+
+          cfg = tomllib.loads(Path('code/examples.toml').read_text())
+          bucket = cfg['bucket']
+          on_s3 = cfg['site']['data'] == 's3'
+          data_url = f"https://{bucket['name']}.s3.{bucket['region']}.amazonaws.com/" if on_s3 else ''
+          page = Path('code/web/index.html').read_text()
+          page = page.replace('__PAGES_URL__', cfg['site']['pages_url']).replace('__DATA_URL__', data_url)
+          Path('site/index.html').write_text(page)
+          EOF
+          touch site/.nojekyll
+          du -sh site
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

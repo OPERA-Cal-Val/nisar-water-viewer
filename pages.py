@@ -6,6 +6,7 @@ import catalog
 
 
 SITE = catalog.ROOT / 'site'
+WORKFLOW = catalog.ROOT / '.github' / 'workflows' / 'pages.yml'
 PAGES_LIMIT_MB = 1000
 LAYER_KEYS = ('nisar_water', 'dswx_ni')
 
@@ -41,4 +42,7 @@ def assemble() -> dict:
     sizes = [] if catalog.data_on_s3() else [place(relative) for relative in site_files()]
     (SITE / 'index.html').write_text(catalog.index_html(local=False))
     (SITE / '.nojekyll').touch()
+    workflow = SITE / WORKFLOW.relative_to(catalog.ROOT)
+    workflow.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(WORKFLOW, workflow)
     return {'files': len(sizes), 'megabytes': round(sum(sizes) / 1e6, 1), 'pages_limit_megabytes': PAGES_LIMIT_MB}
