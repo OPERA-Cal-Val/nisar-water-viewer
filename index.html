@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>nisar-water viewer</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@6.13.0/dist/maplibre-gl.css">
+<script src="https://cdn.jsdelivr.net/npm/@geomatico/maplibre-cog-protocol@0.10.0/dist/index.js"></script>
+<style>
+  :root { --panel: rgba(255, 255, 255, 0.95); --ink: #1d232a; --muted: #5d6874; --line: #d3d9df; --accent: #0b57d0; }
+  html, body { margin: 0; height: 100%; background: #1b1f24; color: var(--ink);
+    font: 13px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  #map { position: absolute; inset: 0; }
+  .panel { position: absolute; top: 10px; z-index: 2; box-sizing: border-box; max-height: calc(100% - 50px);
+    overflow: auto; padding: 10px 12px; background: var(--panel); border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3); }
+  #left { left: 10px; width: 310px; }
+  #right { right: 10px; width: 300px; }
+  .toggle { padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1px solid var(--line); }
+  h1 { margin: 0 0 4px; font-size: 15px; }
+  h2 { margin: 12px 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); }
+  p { margin: 0; color: var(--muted); }
+  select { width: 100%; padding: 3px; font: inherit; }
+  label.row, .row { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
+  .row .when { margin-left: auto; font-size: 11px; color: var(--muted); white-space: nowrap; }
+  .row.na { opacity: 0.45; }
+  .swatch { flex: none; width: 12px; height: 12px; border: 1px solid #8a939c; }
+  .strip { margin: 6px 0 2px; font-weight: 600; }
+  .dates { display: flex; flex-wrap: wrap; gap: 3px; }
+  .dates button { padding: 2px 5px; font: inherit; font-size: 11px; background: #fff; border: 1px solid var(--line);
+    border-radius: 3px; cursor: pointer; }
+  .dates button.missing { border-style: dashed; color: var(--muted); }
+  .dates button.on { color: #fff; background: var(--accent); border-color: var(--accent); }
+  .dates button.ni { box-shadow: inset 0 -3px 0 #00b400; }
+  .dates .year { align-self: center; font-size: 11px; font-weight: 600; color: var(--muted); }
+  dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; margin: 6px 0 0; }
+  dt { color: var(--muted); }
+  dd { margin: 0; overflow-wrap: anywhere; }
+  .note { font-size: 11px; color: var(--muted); }
+  button.action { width: 100%; margin-top: 12px; padding: 7px; font: inherit; font-weight: 600; color: #fff;
+    background: var(--accent); border: 0; border-radius: 4px; cursor: pointer; }
+  @media (max-width: 760px) {
+    #left, #right { left: 8px; right: 8px; width: auto; max-height: 40vh; }
+    #right { top: auto; bottom: 30px; }
+  }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<section id="left" class="panel">
+  <h1>nisar-water viewer</h1>
+  <p id="description"></p>
+  <h2>Example</h2>
+  <select id="example"></select>
+  <h2>Site</h2>
+  <select id="site"></select>
+  <div id="dates"></div>
+  <div id="info"></div>
+</section>
+<section id="right" class="panel">
+  <h2>Layers</h2>
+  <label class="row toggle"><input type="checkbox" id="notwater"> show not-water <span class="note">(not-water shown as white)</span></label>
+  <div id="layers"></div>
+  <h2>Basemap</h2>
+  <div id="basemaps"></div>
+  <h2>Legend</h2>
+  <div id="legend"></div>
+  <button id="png" class="action">Save PNG</button>
+</section>
+<script type="module">
+import * as maplibregl from 'https://cdn.jsdelivr.net/npm/maplibre-gl@6.13.0/dist/maplibre-gl.mjs';
+
+const filled = value => (value.startsWith('__') ? '' : value);
+const PAGES_URL = filled('https://opera-cal-val.github.io/nisar-water-viewer/');
+const DATA_URL = filled('');
+const BASE = DATA_URL || (location.protocol === 'file:' ? PAGES_URL : new URL('.', location.href).href);
+const GIBS = 'gibs.earthdata.nasa.gov/wmts/epsg3857/best';
+const DIRECTIONS = {A: 'Ascending', D: 'Descending'};
+
+const CLASSES = {
+  not_water: {label: 'Not water', rgb: [255, 255, 255]},
+  open_water: {label: 'Open water', rgb: [0, 0, 255]},
+  partial: {label: 'Partial surface water', rgb: [180, 213, 244]},
+  inundated: {label: 'Inundated vegetation', rgb: [0, 255, 0]},
+  snow: {label: 'Snow / ice', rgb: [0, 255, 255]},
+  cloud: {label: 'Cloud', rgb: [175, 175, 175]},
+  hand: {label: 'HAND masked', rgb: [200, 200, 200]},
+  layover: {label: 'Layover / shadow', rgb: [128, 128, 128]},
+};
+
+const LAYERS = [
+  {key: 'nisar_gcov', name: 'NISAR GCOV RGB', kind: 'gibs', level: 13, maxzoom: 10, png: [2], frame: true,
+    note: 'GIBS false colour: co-pol (HH) in red/blue, cross-pol (HV) in green; ~150 m',
+    layer: 'NISAR_L2_Geocoded_Polarimetric_Covariance'},
+  {key: 'rtc_s1', name: 'Sentinel-1 RTC', kind: 'gibs', level: 12, maxzoom: 12, png: [3, 6],
+    note: 'false colour, R/B: VV, G: VH', layer: 'OPERA_L2_Radiometric_Terrain_Corrected_SAR_Sentinel-1'},
+  {key: 'dswx_hls', name: 'DSWx-HLS', kind: 'gibs', level: 12, maxzoom: 12, png: [3], water: true,
+    layer: 'OPERA_L3_Dynamic_Surface_Water_Extent-HLS', classes: ['not_water', 'open_water', 'partial', 'snow', 'cloud']},
+  {key: 'dswx_s1', name: 'DSWx-S1', kind: 'gibs', level: 12, maxzoom: 12, png: [3], water: true,
+    layer: 'OPERA_L3_Dynamic_Surface_Water_Extent-Sentinel-1', classes: ['not_water', 'open_water', 'inundated', 'hand', 'layover']},
+  {key: 'dswx_ni', name: 'DSWx-NI', kind: 'cog', water: true,
+    values: {0: 'not_water', 1: 'open_water', 3: 'inundated', 8: 'inundated', 250: 'hand', 251: 'layover'}},
+  {key: 'nisar_water', name: 'nisar-water', kind: 'cog', water: true,
+    values: {0: 'not_water', 1: 'open_water', 2: 'inundated'}},
+];
+
+const BASEMAPS = {
+  esri: {name: 'Esri World Imagery', maxzoom: 19, attribution: 'Imagery © Esri, Maxar, Earthstar Geographics',
+    tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}']},
+  google: {name: 'Google Satellite', maxzoom: 20, attribution: 'Imagery © Google',
+    tiles: [0, 1, 2, 3].map(i => `https://mt${i}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}`)},
+  none: {name: 'None'},
+};
+
+const state = {examples: [], example: null, catalog: null, site: null, scene: null,
+  on: new Set(['nisar_water']), basemap: 'esri', notWater: false};
+
+const $ = id => document.getElementById(id);
+const el = (tag, props = {}, ...children) => {
+  const node = Object.assign(document.createElement(tag), props);
+  node.append(...children);
+  return node;
+};
+const fetchJson = async path => (await fetch(new URL(path, BASE), {cache: 'no-cache'})).json();
+const signed = days => `${days > 0 ? '+' : days < 0 ? '−' : '±'}${Math.abs(days).toFixed(1)} d`;
+const rgb = c => `rgb(${CLASSES[c].rgb.join(',')})`;
+const sceneOf = key => state.catalog?.scenes[key];
+const currentScene = () => sceneOf(state.scene);
+const layerOf = key => LAYERS.find(l => l.key === key);
+const hasLayer = key => layerOf(key).kind !== 'cog' || Object.values(state.catalog?.scenes ?? {}).some(s => s[key]);
+const version = path => path?.split('/')[1];
+const compactTime = iso => iso.replace(/[-:]/g, '');
+const nameParts = name => name.split('_').slice(3, 5);
+const fileToken = text => String(text).normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
+  .replace(/\s+/g, '-').replace(/[^A-Za-z0-9_.-]/g, '');
+const COLLECTIONS = {HLS: 'C2617126679-POCLOUD', S1: 'C2949811996-POCLOUD'};
+const vertexUrl = names => 'https://search.asf.alaska.edu/#/?searchType=List%20Search&listSearchType=Scene'
+  + `&resultsLoaded=true&searchList=${encodeURIComponent(names.join(','))}`;
+const earthdataUrl = (collection, names) => 'https://search.earthdata.nasa.gov/search/granules'
+  + `?p=${collection}&pg[0][id]=${encodeURIComponent(names.join('!'))}`;
+const link = (href, text, title = '') => el('a', {href, title, target: '_blank', rel: 'noopener'}, text);
+const joined = (items, separator = ' · ') => items.flatMap((item, i) => (i ? [separator, item] : [item]));
+
+function blankTile() {
+  const canvas = new OffscreenCanvas(256, 256);
+  canvas.getContext('2d');
+  return canvas.transferToImageBitmap();
+}
+
+async function fetchPng(url, pngTypes, signal) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const response = await fetch(url, {signal, cache: attempt ? 'reload' : 'default'});
+    if (response.status === 404) return null;
+    if (!response.ok) continue;
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    if (pngTypes.includes(bytes[25])) return bytes;
+  }
+  return undefined;
+}
+
+async function cropTile(bytes, up, x, y, layer, clearWhite) {
+  const bitmap = await createImageBitmap(new Blob([bytes], {type: 'image/png'}));
+  if (!up && !clearWhite) return bitmap;
+  const canvas = new OffscreenCanvas(256, 256);
+  const ctx = canvas.getContext('2d', {willReadFrequently: clearWhite});
+  ctx.imageSmoothingEnabled = !layer.water;
+  const size = 256 >> up;
+  ctx.drawImage(bitmap, (x % (1 << up)) * size, (y % (1 << up)) * size, size, size, 0, 0, 256, 256);
+  if (clearWhite) {
+    const image = ctx.getImageData(0, 0, 256, 256);
+    const px = image.data;
+    for (let i = 0; i < px.length; i += 4) {
+      if (px[i] === 255 && px[i + 1] === 255 && px[i + 2] === 255) px[i + 3] = 0;
+    }
+    ctx.putImageData(image, 0, 0);
+  }
+  return canvas.transferToImageBitmap();
+}
+
+async function gibsTile(params, abort, clearWhite) {
+  const [, root, z, y, x] = params.url.match(/^gibs\w*:\/\/(.+)\/(\d+)\/(\d+)\/(\d+)\.png$/).map((v, i) => i > 1 ? Number(v) : v);
+  const layer = LAYERS.find(l => root.includes(`/${l.layer}/`));
+  try {
+    for (let up = 0; up <= 3 && z - up >= 0; up++) {
+      const bytes = await fetchPng(`https://${root}/${z - up}/${y >> up}/${x >> up}.png`, layer.png, abort.signal);
+      if (bytes === null) return {data: blankTile()};
+      if (bytes) return {data: await cropTile(bytes, up, x, y, layer, clearWhite)};
+    }
+  } catch (error) {
+    if (abort.signal.aborted) throw error;
+  }
+  return {data: blankTile()};
+}
+
+maplibregl.addProtocol('cog', MaplibreCOGProtocol.cogProtocol);
+maplibregl.addProtocol('gibs', (params, abort) => gibsTile(params, abort, false));
+maplibregl.addProtocol('gibsclear', (params, abort) => gibsTile(params, abort, true));
+
+function lookupTable(layer) {
+  const lut = new Uint8ClampedArray(256 * 4);
+  Object.entries(layer.values)
+    .filter(([, cls]) => cls !== 'not_water' || state.notWater)
+    .forEach(([value, cls]) => lut.set([...CLASSES[cls].rgb, 255], Number(value) * 4));
+  return lut;
+}
+
+function colorFunction(lut) {
+  return (pixel, color) => {
+    const i = pixel[0] * 4;
+    color[0] = lut[i]; color[1] = lut[i + 1]; color[2] = lut[i + 2]; color[3] = lut[i + 3];
+  };
+}
+
+const map = new maplibregl.Map({
+  container: 'map',
+  style: {version: 8, sources: {}, layers: [{id: 'background', type: 'background', paint: {'background-color': '#1b1f24'}}]},
+  center: [0, 20],
+  zoom: 1.5,
+  canvasContextAttributes: {preserveDrawingBuffer: true},
+  attributionControl: {compact: true},
+});
+map.addControl(new maplibregl.NavigationControl({showCompass: false}), 'bottom-right');
+map.addControl(new maplibregl.ScaleControl(), 'bottom-left');
+
+function sourceFor(layer, scene) {
+  if (layer.kind === 'cog') {
+    if (!scene[layer.key]) return null;
+    const url = new URL(`${state.example}/${scene[layer.key]}`, BASE).href;
+    MaplibreCOGProtocol.setColorFunction(url, colorFunction(lookupTable(layer)));
+    return {type: 'raster', url: `cog://${url}`, tileSize: 256};
+  }
+  const hit = scene.gibs[layer.key];
+  if (!hit?.date) return null;
+  const protocol = layer.water && !state.notWater ? 'gibsclear' : 'gibs';
+  const path = `${layer.layer}/default/${hit.date}/GoogleMapsCompatible_Level${layer.level}/{z}/{y}/{x}.png`;
+  return {type: 'raster', tiles: [`${protocol}://${GIBS}/${path}`], tileSize: 256, maxzoom: layer.maxzoom,
+    attribution: 'NASA GIBS: OPERA, NISAR'};
+}
+
+function drawOverlays() {
+  LAYERS.forEach(({key}) => {
+    if (map.getLayer(key)) map.removeLayer(key);
+    if (map.getSource(key)) map.removeSource(key);
+  });
+  const scene = currentScene();
+  if (!scene) return;
+  LAYERS.filter(l => state.on.has(l.key) && hasLayer(l.key)).forEach(layer => {
+    const source = sourceFor(layer, scene);
+    if (!source) return;
+    map.addSource(layer.key, source);
+    map.addLayer({id: layer.key, type: 'raster', source: layer.key,
+      paint: {'raster-resampling': layer.water ? 'nearest' : 'linear', 'raster-fade-duration': 0}}, 'sites-line');
+  });
+}
+
+function drawBasemap() {
+  if (map.getLayer('basemap')) map.removeLayer('basemap');
+  if (map.getSource('basemap')) map.removeSource('basemap');
+  const base = BASEMAPS[state.basemap];
+  if (!base.tiles) return;
+  map.addSource('basemap', {type: 'raster', tiles: base.tiles, tileSize: 256, maxzoom: base.maxzoom, attribution: base.attribution});
+  map.addLayer({id: 'basemap', type: 'raster', source: 'basemap'}, map.getStyle().layers[1]?.id);
+}
+
+function siteFeatures() {
+  return {type: 'FeatureCollection', features: state.catalog.sites.map(s => ({type: 'Feature', properties: {site_id: s.id},
+    geometry: {type: 'Point', coordinates: [(s.bbox[0] + s.bbox[2]) / 2, (s.bbox[1] + s.bbox[3]) / 2]}}))};
+}
+
+function drawSites() {
+  const footprints = new URL(`${state.example}/sites.geojson`, BASE).href;
+  if (map.getSource('sites')) {
+    map.getSource('sites').setData(footprints);
+    map.getSource('site-points').setData(siteFeatures());
+    return;
+  }
+  map.addSource('sites', {type: 'geojson', data: footprints});
+  map.addSource('site-points', {type: 'geojson', data: siteFeatures()});
+  map.addLayer({id: 'sites-fill', type: 'fill', source: 'sites', paint: {'fill-color': '#ffd400', 'fill-opacity': 0.04}});
+  map.addLayer({id: 'sites-line', type: 'line', source: 'sites', paint: {'line-color': '#ffd400', 'line-width': 1, 'line-opacity': 0.7}});
+  map.addLayer({id: 'site-selected', type: 'line', source: 'sites', filter: ['==', ['get', 'site_id'], ''],
+    paint: {'line-color': '#ffd400', 'line-width': 2.5}});
+  map.addLayer({id: 'site-points', type: 'circle', source: 'site-points', maxzoom: 8,
+    paint: {'circle-radius': 5, 'circle-color': '#ffd400', 'circle-stroke-color': '#000', 'circle-stroke-width': 1}});
+  ['sites-fill', 'site-points'].forEach(id => {
+    map.on('click', id, e => selectSite(e.features[0].properties.site_id, true));
+    map.on('mouseenter', id, () => { map.getCanvas().style.cursor = 'pointer'; });
+    map.on('mouseleave', id, () => { map.getCanvas().style.cursor = ''; });
+  });
+}
+
+function layerWhen(layer, scene) {
+  if (!scene) return '';
+  if (layer.kind === 'cog') {
+    const path = scene[layer.key];
+    if (!path) return layer.key === 'nisar_water' ? 'not processed' : 'no product';
+    return `${scene.date} · ${version(path)}`;
+  }
+  const hit = scene.gibs[layer.key];
+  if (!hit?.date) return `no coverage ±${hit?.window_days ?? 7} d`;
+  if (hit.coverage === undefined) return hit.date;
+  return `${hit.date} (${signed(hit.days)}, ${Math.round(hit.coverage * 100)}%)`;
+}
+
+function layerAvailable(layer, scene) {
+  return Boolean(scene && (layer.kind === 'cog' ? scene[layer.key] : scene.gibs[layer.key]?.date));
+}
+
+function renderLayerPanel() {
+  const scene = currentScene();
+  $('layers').replaceChildren(...[...LAYERS].reverse().filter(l => hasLayer(l.key)).map(layer => {
+    const box = el('input', {type: 'checkbox', checked: state.on.has(layer.key)});
+    box.onchange = () => { box.checked ? state.on.add(layer.key) : state.on.delete(layer.key); refresh(); };
+    const row = el('label', {className: `row${layerAvailable(layer, scene) ? '' : ' na'}`, title: layer.note ?? ''},
+      box, layer.name, el('span', {className: 'when'}, layerWhen(layer, scene)));
+    return row;
+  }));
+  $('basemaps').replaceChildren(...Object.entries(BASEMAPS).map(([key, base]) => {
+    const radio = el('input', {type: 'radio', name: 'basemap', checked: state.basemap === key});
+    radio.onchange = () => { state.basemap = key; drawBasemap(); writeHash(); };
+    return el('label', {className: 'row'}, radio, base.name);
+  }));
+  $('notwater').checked = state.notWater;
+}
+
+function legendEntries() {
+  const on = LAYERS.filter(l => state.on.has(l.key) && hasLayer(l.key));
+  const classes = new Set(on.filter(l => l.water).flatMap(l => l.classes ?? Object.values(l.values)));
+  if (!state.notWater) classes.delete('not_water');
+  const order = Object.keys(CLASSES).filter(c => classes.has(c));
+  return {classes: order, notes: on.filter(l => l.note).map(l => `${l.name}: ${l.note}`)};
+}
+
+function renderLegend() {
+  const {classes, notes} = legendEntries();
+  $('legend').replaceChildren(
+    ...classes.map(c => el('div', {className: 'row'}, el('span', {className: 'swatch', style: `background:${rgb(c)}`}), CLASSES[c].label)),
+    ...notes.map(n => el('div', {className: 'note'}, n)),
+  );
+}
+
+function renderDates() {
+  const scenes = state.site?.scenes ?? [];
+  if (scenes.length < 2) {
+    $('dates').replaceChildren();
+    return;
+  }
+  const groups = Object.keys(DIRECTIONS).map(d => [d, scenes.filter(k => sceneOf(k).direction === d)]).filter(([, ks]) => ks.length);
+  $('dates').replaceChildren(...groups.flatMap(([direction, keys]) => {
+    const buttons = keys.flatMap((key, i) => {
+      const scene = sceneOf(key);
+      const year = scene.date.slice(0, 4);
+      const classes = [key === state.scene && 'on', !scene.nisar_water && 'missing', scene.dswx_ni && 'ni'].filter(Boolean);
+      const notes = [!scene.nisar_water && 'nisar-water not processed yet', scene.dswx_ni && 'DSWx-NI available'].filter(Boolean);
+      const button = el('button', {className: classes.join(' '), title: [scene.date, ...notes].join(' · ')}, scene.date.slice(5));
+      button.onclick = () => selectScene(key);
+      const newYear = i === 0 || sceneOf(keys[i - 1]).date.slice(0, 4) !== year;
+      return newYear ? [el('span', {className: 'year'}, year), button] : [button];
+    });
+    return [el('div', {className: 'strip'}, `${DIRECTIONS[direction]} · ${sceneOf(keys[0]).frame_id}`), el('div', {className: 'dates'}, ...buttons)];
+  }), ...(scenes.some(k => sceneOf(k).dswx_ni) ? [el('p', {className: 'note'}, 'Green underline: DSWx-NI available on that date.')] : []));
+}
+
+function renderInfo() {
+  const site = state.site;
+  const scene = currentScene();
+  if (!site) {
+    $('info').replaceChildren(el('p', {}, `${state.catalog.sites.length} sites. Pick one from the list or click it on the map.`));
+    return;
+  }
+  const info = site.info;
+  const sites = state.catalog.kind === 'sites';
+  const rows = [
+    ['Site', sites ? site.id : site.label],
+    ['Place', sites ? [info.state, info.country].filter(Boolean).join(', ') : ''],
+    ['Strata', info.strata],
+  ];
+  if (scene) {
+    rows.push(['NISAR', `${scene.acq_utc.replace('T', ' ').replace('Z', ' UTC')} · ${DIRECTIONS[scene.direction]} · ${scene.frame_id}`]);
+  }
+  if (info.gcov_quality) rows.push(['GCOV quality', [info.gcov_quality, info.comment].filter(Boolean).join(' · ')]);
+  const checks = Object.entries(info.verification ?? {});
+  if (checks.length) rows.push(['OSW check', el('span', {}, ...joined(checks.map(checkItem)))]);
+  const table = items => el('dl', {}, ...items.filter(([, v]) => v).flatMap(([k, v]) => [el('dt', {}, k), el('dd', {}, v)]));
+  $('info').replaceChildren(table(rows), ...(scene ? [el('h2', {}, 'Products'), table(productRows(scene))] : []));
+}
+
+function checkItem([sensor, check]) {
+  const text = `${sensor} ${check.pass ? '✓' : '✗'} ${check.acc.toFixed(3)}`;
+  return COLLECTIONS[sensor] ? link(earthdataUrl(COLLECTIONS[sensor], [check.granule]), text, check.granule) : text;
+}
+
+function gibsRow(scene, key, url) {
+  const hit = scene.gibs[key];
+  if (!hit?.date) return null;
+  const names = hit.granules.map(g => g.name);
+  const text = `${hit.date} · ${names.length} granule${names.length > 1 ? 's' : ''} ↗`;
+  return [layerOf(key).name, link(url(hit, names), text, names.join('\n'))];
+}
+
+function productRows(scene) {
+  const tiles = scene.dswx_ni_tiles.map(t => nameParts(t.name)[0]);
+  return [
+    ['NISAR GCOV', link(vertexUrl([scene.granule_id]), `${scene.frame_id} · ${compactTime(scene.acq_utc)} ↗`, scene.granule_id)],
+    gibsRow(scene, 'dswx_hls', (hit, names) => earthdataUrl(hit.collection, names)),
+    gibsRow(scene, 'dswx_s1', (hit, names) => earthdataUrl(hit.collection, names)),
+    gibsRow(scene, 'rtc_s1', (hit, names) => vertexUrl(names)),
+    tiles.length ? ['DSWx-NI', `${tiles.join(' ')} · not public`] : null,
+  ].filter(Boolean);
+}
+
+function writeHash() {
+  const center = map.getCenter();
+  const params = new URLSearchParams({
+    ex: state.example ?? '',
+    site: state.site?.id ?? '',
+    scene: state.scene ?? '',
+    on: [...state.on].join(','),
+    bm: state.basemap,
+    nw: state.notWater ? '1' : '0',
+    map: `${map.getZoom().toFixed(2)}/${center.lat.toFixed(5)}/${center.lng.toFixed(5)}`,
+  });
+  history.replaceState(null, '', `#${params}`);
+}
+
+function refresh() {
+  drawOverlays();
+  renderLayerPanel();
+  renderLegend();
+  renderDates();
+  renderInfo();
+  writeHash();
+}
+
+function padding() {
+  const wide = window.innerWidth > 760;
+  return wide ? {top: 40, bottom: 40, left: 340, right: 300} : 30;
+}
+
+function fitAll() {
+  const boxes = state.catalog.sites.map(s => s.bbox);
+  const bounds = [Math.min(...boxes.map(b => b[0])), Math.min(...boxes.map(b => b[1])), Math.max(...boxes.map(b => b[2])), Math.max(...boxes.map(b => b[3]))];
+  map.fitBounds(bounds, {padding: padding(), maxZoom: 9, duration: 0});
+}
+
+function selectScene(key) {
+  state.scene = key;
+  refresh();
+}
+
+function defaultScene(site) {
+  if (site.scenes.includes(state.scene)) return state.scene;
+  return [...site.scenes].reverse().find(k => sceneOf(k).nisar_water) ?? site.scenes.at(-1) ?? null;
+}
+
+function selectSite(id, fit) {
+  state.site = state.catalog.sites.find(s => s.id === id) ?? null;
+  $('site').value = state.site?.id ?? '';
+  map.setFilter('site-selected', ['==', ['get', 'site_id'], state.site?.id ?? '']);
+  state.scene = state.site ? defaultScene(state.site) : null;
+  if (fit) state.site ? map.fitBounds(state.site.bbox, {padding: padding(), duration: 0}) : fitAll();
+  refresh();
+}
+
+async function selectExample(name, siteId = null, fit = true) {
+  state.example = name;
+  state.catalog = await fetchJson(`${name}/catalog.json`);
+  state.site = null;
+  state.scene = null;
+  $('example').value = name;
+  $('description').textContent = state.catalog.description;
+  const options = state.catalog.kind === 'sites' ? [el('option', {value: ''}, `All ${state.catalog.sites.length} sites`)] : [];
+  $('site').replaceChildren(...options, ...state.catalog.sites.map(s => el('option', {value: s.id}, s.label)));
+  drawSites();
+  const first = state.catalog.kind === 'sites' ? '' : state.catalog.sites[0]?.id;
+  selectSite(siteId ?? first, fit);
+}
+
+function step(offset) {
+  const scene = currentScene();
+  if (!scene || !state.site) return;
+  const keys = state.site.scenes.filter(k => sceneOf(k).direction === scene.direction);
+  const next = keys[keys.indexOf(state.scene) + offset];
+  if (next) selectScene(next);
+}
+
+function titleLines() {
+  const scene = currentScene();
+  const site = state.site;
+  const head = [state.catalog.title, site?.label].filter(Boolean).join(' — ');
+  const on = [...LAYERS].reverse().filter(l => state.on.has(l.key) && layerAvailable(l, scene));
+  const parts = on.map(l => `${l.name} ${layerWhen(l, scene)}`);
+  const base = BASEMAPS[state.basemap].tiles ? [BASEMAPS[state.basemap].name] : [];
+  const nisar = scene ? `NISAR ${scene.date} ${DIRECTIONS[scene.direction]} ${scene.frame_id}` : '';
+  return [head, [nisar, ...parts, ...base].filter(Boolean).join('  ·  ')];
+}
+
+function containsCenter(bbox) {
+  const center = map.getCenter();
+  return Boolean(bbox) && center.lng >= bbox[0] && center.lng <= bbox[2] && center.lat >= bbox[1] && center.lat <= bbox[3];
+}
+
+function layerTokens(layer, scene) {
+  if (layer.key === 'nisar_water' || layer.frame) return [scene.frame_id, compactTime(scene.acq_utc)];
+  const items = layer.key === 'dswx_ni' ? scene.dswx_ni_tiles : scene.gibs[layer.key]?.granules ?? [];
+  const item = items.find(i => containsCenter(i.bbox)) ?? items[0];
+  return item ? nameParts(item.name) : [];
+}
+
+function siteToken() {
+  const site = state.site;
+  if (!site) return state.catalog.title;
+  return state.catalog.kind === 'sites' ? [site.id, site.info.state, site.info.country].filter(Boolean).join(' ') : site.label;
+}
+
+function pngName() {
+  const scene = currentScene();
+  const top = scene && [...LAYERS].reverse().find(l => state.on.has(l.key) && hasLayer(l.key) && layerAvailable(l, scene));
+  const corner = map.getBounds().getNorthEast();
+  const head = top ? [top.name, ...layerTokens(top, scene)] : [BASEMAPS[state.basemap].name];
+  return `${[...head, siteToken(), corner.lat.toFixed(1), corner.lng.toFixed(1)].map(fileToken).join('_')}.png`;
+}
+
+function drawLegend(ctx, scale, top, height) {
+  const {classes, notes} = legendEntries();
+  if (!classes.length && !notes.length) return;
+  const line = 18 * scale;
+  const pad = 8 * scale;
+  ctx.font = `${12 * scale}px system-ui, sans-serif`;
+  const width = Math.max(...[...classes.map(c => CLASSES[c].label), ...notes].map(t => ctx.measureText(t).width)) + 34 * scale;
+  const boxHeight = (classes.length + notes.length) * line + 2 * pad;
+  const x = 12 * scale;
+  const y = height - boxHeight - 12 * scale;
+  ctx.fillStyle = 'rgba(255,255,255,0.92)';
+  ctx.fillRect(x, y, width, boxHeight);
+  classes.forEach((c, i) => {
+    const rowY = y + pad + i * line;
+    ctx.fillStyle = rgb(c);
+    ctx.fillRect(x + pad, rowY + 3 * scale, 12 * scale, 12 * scale);
+    ctx.strokeStyle = '#8a939c';
+    ctx.strokeRect(x + pad, rowY + 3 * scale, 12 * scale, 12 * scale);
+    ctx.fillStyle = '#1d232a';
+    ctx.fillText(CLASSES[c].label, x + pad + 20 * scale, rowY + 13 * scale);
+  });
+  notes.forEach((n, i) => {
+    ctx.fillStyle = '#5d6874';
+    ctx.fillText(n, x + pad, y + pad + (classes.length + i) * line + 13 * scale);
+  });
+}
+
+async function savePng() {
+  const ready = new Promise(resolve => map.once('idle', resolve));
+  map.triggerRepaint();
+  await ready;
+  const source = map.getCanvas();
+  const scale = source.width / source.clientWidth;
+  const header = Math.round(48 * scale);
+  const out = document.createElement('canvas');
+  out.width = source.width;
+  out.height = source.height + header;
+  const ctx = out.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, out.width, header);
+  ctx.drawImage(source, 0, header);
+  const [title, subtitle] = titleLines();
+  ctx.fillStyle = '#1d232a';
+  ctx.font = `600 ${15 * scale}px system-ui, sans-serif`;
+  ctx.fillText(title, 12 * scale, 20 * scale);
+  ctx.fillStyle = '#5d6874';
+  ctx.font = `${12 * scale}px system-ui, sans-serif`;
+  ctx.fillText(subtitle, 12 * scale, 39 * scale);
+  drawLegend(ctx, scale, header, out.height);
+  const credit = [BASEMAPS[state.basemap].attribution, 'NASA GIBS'].filter(Boolean).join(' · ');
+  ctx.font = `${10 * scale}px system-ui, sans-serif`;
+  ctx.textAlign = 'right';
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  ctx.fillText(credit, out.width - 8 * scale, out.height - 8 * scale);
+  out.toBlob(blob => {
+    const anchor = el('a', {href: URL.createObjectURL(blob), download: pngName()});
+    anchor.click();
+    setTimeout(() => URL.revokeObjectURL(anchor.href), 5000);
+  });
+}
+
+function readHash() {
+  const params = new URLSearchParams(location.hash.slice(1));
+  return Object.fromEntries(params);
+}
+
+async function start() {
+  const hash = readHash();
+  if (hash.on !== undefined) state.on = new Set(hash.on.split(',').filter(Boolean));
+  if (BASEMAPS[hash.bm]) state.basemap = hash.bm;
+  state.notWater = hash.nw === '1';
+  try {
+    state.examples = await fetchJson('examples.json');
+  } catch (error) {
+    $('description').textContent = `Could not load examples.json from ${BASE}`;
+    return;
+  }
+  $('example').replaceChildren(...state.examples.map(e => el('option', {value: e.name}, e.title)));
+  $('example').onchange = e => selectExample(e.target.value);
+  $('site').onchange = e => selectSite(e.target.value, true);
+  $('notwater').onchange = e => { state.notWater = e.target.checked; refresh(); };
+  $('png').onclick = savePng;
+  drawBasemap();
+  const name = state.examples.some(e => e.name === hash.ex) ? hash.ex : state.examples[0]?.name;
+  if (!name) return;
+  const camera = hash.map?.split('/').map(Number);
+  await selectExample(name, hash.site || null, !camera);
+  if (hash.scene && state.site?.scenes.includes(hash.scene)) selectScene(hash.scene);
+  if (camera?.length === 3) map.jumpTo({zoom: camera[0], center: [camera[2], camera[1]]});
+  map.on('moveend', writeHash);
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+}
+
+map.on('load', start);
+</script>
+</body>
+</html>
