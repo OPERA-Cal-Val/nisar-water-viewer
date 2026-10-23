@@ -53,5 +53,6 @@ def collect_example(sources: dict, dest: Path) -> dict[str, dict[str, int]]:
         'nisar-water': nisar_water_pairs(sources['nisar_water'], dest) if 'nisar_water' in sources else [],
         'dswx-ni': dswx_ni_pairs(sources['dswx_ni'], dest) if 'dswx_ni' in sources else [],
         'tables': table_pairs(sources.get('tables', []), dest),
+        'aois': [(p, dest / 'aois' / p.name) for p in sources.get('aois', [])],
     }
     return {group: link_pairs(pairs) for group, pairs in groups.items() if pairs}

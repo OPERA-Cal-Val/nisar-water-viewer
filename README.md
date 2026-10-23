@@ -43,6 +43,7 @@ pixi run site             # assemble site/: exactly what GitHub Pages serves
 | nisar-water | `<example>/nisar-water/<run>/<frame>__<date>_WTR.tif` | whole-frame product; 0 not water, 1 open water, 2 inundated vegetation |
 | DSWx-NI | `<example>/dswx-ni/v<version>/<frame>__<date>_WTR.tif` | `B01_WTR` only; all tiles of one GCOV acquisition, mosaicked |
 | DSWx-HLS | GIBS `OPERA_L3_Dynamic_Surface_Water_Extent-HLS` | best-covered date within ±7 days (below) |
+| DSWx-HLS CONF | NASA Earthdata GIS image service `OPERA_L3_DSWX-HLS_V1_B03_CONF` | confidence layer on the DSWx-HLS date: open water high/moderate, partial surface water conservative/aggressive, and the same classes under cloud (muted) or snow |
 | DSWx-S1 | GIBS `OPERA_L3_Dynamic_Surface_Water_Extent-Sentinel-1` | best-covered date within ±7 days |
 | Sentinel-1 RTC | GIBS `OPERA_L2_Radiometric_Terrain_Corrected_SAR_Sentinel-1` | best-covered date within ±7 days; VV/VH false colour |
 | HLS RGB | GIBS `HLS_S30_…` over `HLS_L30_Nadir_BRDF_Adjusted_Reflectance` | true colour on the DSWx-HLS date; whichever sensor imaged the site shows |
@@ -53,7 +54,7 @@ pixi run site             # assemble site/: exactly what GitHub Pages serves
 - Colours match GIBS, so the same class looks the same in every layer: open water blue, inundated vegetation green, HAND-masked light grey.
 - Not-water is hidden by default so the imagery shows through. **show not-water** (top of the layer panel) draws it as white in every water layer.
 
-**How DSWx-HLS, DSWx-S1 and Sentinel-1 dates are chosen.** For each NISAR scene:
+**How DSWx-HLS, DSWx-S1 and Sentinel-1 dates are chosen.** For each NISAR scene **and each site** (sites of a time-series example can be far apart, so each gets its own dates):
 1. **Candidates:** every date within ±7 days with a granule touching the site, from a public CMR search.
 2. **Coverage:** for each candidate date, the GIBS tiles the viewer would show are fetched. The share of the **site polygon** with valid data is measured; the polygon is the UMD chip, or the AOI for time-series examples. Cloud does not count for DSWx-HLS.
 3. **Choice:** the nearest date with at least 90 % coverage; else the best-covered one; else "no coverage ±7 d".
@@ -70,7 +71,7 @@ The **Products** list under each scene links to the exact granules shown:
 
 ## Screenshots for slides
 
-**Save PNG** writes the map at screen resolution, with a title line, a legend and imagery credits.
+**Save PNG** saves the **dashed square** in the middle of the map at screen resolution, adding a title, the dates of the layers that are on, a legend and imagery credits. Picking a site frames it inside the square. The slight dimming outside the square is on screen only.
 
 **File names** are tokens joined by `_`:
 
@@ -82,7 +83,7 @@ The **Products** list under each scene links to the exact granules shown:
   - DSWx layers: the MGRS tile under the centre of the view and that granule's time.
   - Sentinel-1: the burst ID and time.
 - **Site:** spaces become `-` and accents are dropped.
-- **NE lat / NE lon:** the upper-right corner of the view, to 1 decimal.
+- **NE lat / NE lon:** the upper-right corner of the square, to 1 decimal.
 
 For example:
 - `nisar-water_T119_F019_A_20261008T103833Z_Congaree-National-Park-Wilderness-SC_34.1_-80.6.png`
@@ -168,7 +169,9 @@ Everything published is readable by anyone with the URL, including DSWx-NI and u
    [examples.<name>.sources]
    nisar_water = "../nisar-water/examples/<name>"
    dswx_ni = "~/somewhere/opera_dswx-ni"
+   aois = ["../nisar-water/extent_data/extra_site.parquet"]
    ```
+   `aois` is optional. It adds more sites to the example's Site dropdown, alongside the features in `aoi.geojson`; each file needs `name`, `state` and a polygon. The example's frames must cover them.
 3. **Build and check:** `pixi run collect <name> && pixi run build <name>`, then `pixi run serve`.
 4. **Publish:** `pixi run site` prints the published size. Keep it under 1 GB, or switch to `data = "s3"`.
 

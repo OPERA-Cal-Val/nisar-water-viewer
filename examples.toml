@@ -31,9 +31,21 @@ nisar_water = "../nisar-water/examples/congaree"
 dswx_ni = "~/Desktop/congaree_opera_dswx-ni"
 
 [examples.oregon_lakes]
-title = "Summer Lake and Lake Abert, OR"
-description = "Ascending and descending nisar-water time series over two shallow, fluctuating lakes."
+title = "South-central Oregon lakes and marshes"
+description = "Ascending and descending nisar-water time series over Summer Lake, Lake Abert, Warner Lakes and Sycan Marsh."
 kind = "timeseries"
 
 [examples.oregon_lakes.sources]
 nisar_water = "../nisar-water/examples/oregon_lakes"
+aois = [
+    "../nisar-water/extent_data/warner_lakes.parquet",
+    "../nisar-water/extent_data/sycan_marsh.parquet",
+]
+
+[examples.central_valley]
+title = "Sacramento Valley, CA"
+description = "Ascending and descending nisar-water time series over Central Valley agriculture in Colusa and Yolo counties."
+kind = "timeseries"
+
+[examples.central_valley.sources]
+nisar_water = "../nisar-water/examples/central_valley"

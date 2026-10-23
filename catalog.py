@@ -146,22 +146,29 @@ def verification(tables: Path) -> dict[str, dict]:
     }
 
 
-def previous_gibs(name: str) -> dict[str, dict]:
+def previous_gibs(name: str) -> dict[tuple[str, str], dict]:
     path = BUILD / name / 'catalog.json'
-    return {k: s['gibs'] for k, s in json.loads(path.read_text())['scenes'].items()} if path.exists() else {}
+    scenes = json.loads(path.read_text())['scenes'] if path.exists() else {}
+    return {
+        (site, scene): layers
+        for scene, record in scenes.items()
+        for site, layers in record['gibs'].items()
+        if isinstance(layers, dict) and 'dswx_hls' in layers
+    }
 
 
 def is_current(entry: object) -> bool:
     return isinstance(entry, dict) and entry.get('window_days') == opera.WINDOW_DAYS
 
 
-def fill_gibs(scenes: pd.DataFrame, regions: dict[str, object], known: dict[str, dict]) -> dict[str, dict]:
-    times = dict(zip(scenes.scene, scenes.acq_time))
-    cached = {(scene, key): known.get(scene, {}).get(key) for scene in scenes.scene for key in GIBS_KEYS}
+def fill_gibs(targets: dict[tuple[str, str], tuple[object, datetime]], known: dict) -> dict[str, dict[str, dict]]:
+    cached = {(target, key): known.get(target, {}).get(key) for target in targets for key in GIBS_KEYS}
     todo = [job for job, entry in cached.items() if not is_current(entry)]
-    hits = opera.best_dates([(key, bbox(regions[scene]), regions[scene].wkt, times[scene]) for scene, key in todo])
+    hits = opera.best_dates([(key, bbox(targets[t][0]), targets[t][0].wkt, targets[t][1]) for t, key in todo])
     found = cached | dict(zip(todo, hits))
-    return {scene: {key: found[(scene, key)] for key in GIBS_KEYS} for scene in scenes.scene}
+    by_target = {target: {key: found[(target, key)] for key in GIBS_KEYS} for target in targets}
+    scenes = sorted({scene for _, scene in targets})
+    return {scene: {site: g for (site, sc), g in by_target.items() if sc == scene} for scene in scenes}
 
 
 def nisar_water_jobs(name: str, scenes: pd.DataFrame, run_dir: Path | None) -> Jobs:
@@ -221,7 +228,7 @@ def scene_record(s: object, gibs: dict, layers: dict[str, dict[str, str]], tiles
         'granule_id': s.granule_id,
         **{key: paths.get(s.scene) for key, paths in layers.items()},
         'dswx_ni_tiles': tiles.get(s.scene, []),
-        'gibs': {'nisar_gcov': {'date': s.date}} | gibs[s.scene],
+        'gibs': {site: {'nisar_gcov': {'date': s.date}} | layers for site, layers in gibs.get(s.scene, {}).items()},
     }
 
 
@@ -239,8 +246,13 @@ def build_validation(cfg: dict, run_dir: Path | None, force: bool) -> tuple[dict
     granules = sites[['site_id', 'nisar_id']]
     scenes = read_scenes(cfg['data'], run_dir).merge(granules, left_on='granule_id', right_on='nisar_id')
     site_scene = dict(zip(scenes.site_id, scenes.scene))
-    regions = {site_scene[s.site_id]: s.geometry for s in sites.itertuples() if s.site_id in site_scene}
-    gibs = fill_gibs(scenes, regions, {} if force else previous_gibs(name))
+    times = dict(zip(scenes.scene, scenes.acq_time))
+    targets = {
+        (s.site_id, site_scene[s.site_id]): (s.geometry, times[site_scene[s.site_id]])
+        for s in sites.itertuples()
+        if s.site_id in site_scene
+    }
+    gibs = fill_gibs(targets, {} if force else previous_gibs(name))
     layers = products(cfg, scenes, run_dir, force)
     tiles = dswx_ni_tiles_by_scene(scenes, cfg['data'])
     checks = verification(tables)
@@ -266,13 +278,20 @@ def build_validation(cfg: dict, run_dir: Path | None, force: bool) -> tuple[dict
     return {'sites': site_records, 'scenes': scene_records}, sites[['site_id', 'label', 'geometry']]
 
 
+def timeseries_aois(data_dir: Path) -> gpd.GeoDataFrame:
+    extra = [gpd.read_parquet(p) for p in sorted((data_dir / 'aois').glob('*.parquet'))]
+    frames = [gpd.read_file(data_dir / 'aoi.geojson'), *extra]
+    aoi = pd.concat([f.to_crs(4326)[['name', 'state', 'geometry']] for f in frames], ignore_index=True)
+    labels = [f'{n}, {s}' for n, s in zip(aoi.name, aoi.state)]
+    return gpd.GeoDataFrame(aoi.assign(site_id=[slug(n) for n in aoi.name], label=labels), crs=4326)
+
+
 def build_timeseries(cfg: dict, run_dir: Path | None, force: bool) -> tuple[dict, gpd.GeoDataFrame]:
     name = cfg['name']
-    aoi = gpd.read_file(cfg['data'] / 'aoi.geojson').to_crs(4326)
-    aoi = aoi.assign(site_id=[slug(n) for n in aoi.name], label=[f'{n}, {s}' for n, s in zip(aoi.name, aoi.state)])
+    aoi = timeseries_aois(cfg['data'])
     scenes = read_scenes(cfg['data'], run_dir)
-    region = aoi.union_all()
-    gibs = fill_gibs(scenes, {k: region for k in scenes.scene}, {} if force else previous_gibs(name))
+    targets = {(a.site_id, s.scene): (a.geometry, s.acq_time) for a in aoi.itertuples() for s in scenes.itertuples()}
+    gibs = fill_gibs(targets, {} if force else previous_gibs(name))
     layers = products(cfg, scenes, run_dir, force)
     tiles = dswx_ni_tiles_by_scene(scenes, cfg['data'])
     frames = dict(zip(scenes.direction, scenes.frame_id))
@@ -338,5 +357,5 @@ def summary(catalog: dict) -> dict:
         'scenes': len(catalog['scenes']),
         'nisar_water': catalog['nisar_water_runs'],
         'dswx_ni': catalog['dswx_ni_versions'],
-        **{k: sum(bool((s['gibs'].get(k) or {}).get('date')) for s in scenes) for k in GIBS_KEYS},
+        **{k: sum(bool((g.get(k) or {}).get('date')) for s in scenes for g in s['gibs'].values()) for k in GIBS_KEYS},
     }
