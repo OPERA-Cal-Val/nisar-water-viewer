@@ -9,7 +9,7 @@
  "dswx_ni_versions": {
   "viv_0.3": 2
  },
- "built": "2026-10-23 10:06 PDT",
+ "built": "2026-10-23 14:24 PDT",
  "sites": [
   {
    "id": "congaree-national-park-wilderness",
@@ -60,98 +60,100 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-06-21"
-    },
-    "dswx_hls": {
-     "date": "2026-06-26",
-     "days": 5.66,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260626T155819Z_20260628T024711Z_S2B_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      },
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260626T155920Z_20260628T012237Z_L8_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 0.378,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": "2026-06-19",
-     "days": -1.03,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-S1_T17SNT_20260619T233002Z_20260827T021113Z_S1A_30_v1.0",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2949811996-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-06-26",
-     "days": 5.97,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260626T232217Z_20260804T043002Z_S1A_30_v1.0",
-       "bbox": [
-        -81.8167,
-        33.7086,
-        -80.8135,
-        34.0253
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260626T232217Z_20261021T205032Z_S1A_30_v1.0",
-       "bbox": [
-        -81.8167,
-        33.7086,
-        -80.8135,
-        34.0253
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260626T232218Z_20260804T043002Z_S1A_30_v1.0",
-       "bbox": [
-        -80.9343,
-        33.9051,
-        -79.8914,
-        34.22
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260626T232218Z_20261021T205032Z_S1A_30_v1.0",
-       "bbox": [
-        -80.9343,
-        33.9051,
-        -79.8914,
-        34.22
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-06-21"
+     },
+     "dswx_hls": {
+      "date": "2026-06-26",
+      "days": 5.66,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260626T155819Z_20260628T024711Z_S2B_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260626T155920Z_20260628T012237Z_L8_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 0.378,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": "2026-06-19",
+      "days": -1.03,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-S1_T17SNT_20260619T233002Z_20260827T021113Z_S1A_30_v1.0",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2949811996-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-06-26",
+      "days": 5.97,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260626T232217Z_20260804T043002Z_S1A_30_v1.0",
+        "bbox": [
+         -81.8167,
+         33.7086,
+         -80.8135,
+         34.0253
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260626T232217Z_20261021T205032Z_S1A_30_v1.0",
+        "bbox": [
+         -81.8167,
+         33.7086,
+         -80.8135,
+         34.0253
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260626T232218Z_20260804T043002Z_S1A_30_v1.0",
+        "bbox": [
+         -80.9343,
+         33.9051,
+         -79.8914,
+         34.22
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260626T232218Z_20261021T205032Z_S1A_30_v1.0",
+        "bbox": [
+         -80.9343,
+         33.9051,
+         -79.8914,
+         34.22
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -165,98 +167,100 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-06-22"
-    },
-    "dswx_hls": {
-     "date": "2026-06-26",
-     "days": 4.22,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260626T155819Z_20260628T024711Z_S2B_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      },
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260626T155920Z_20260628T012237Z_L8_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 0.378,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": "2026-06-19",
-     "days": -2.46,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-S1_T17SNT_20260619T233002Z_20260827T021113Z_S1A_30_v1.0",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2949811996-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-06-26",
-     "days": 4.53,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260626T232217Z_20260804T043002Z_S1A_30_v1.0",
-       "bbox": [
-        -81.8167,
-        33.7086,
-        -80.8135,
-        34.0253
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260626T232217Z_20261021T205032Z_S1A_30_v1.0",
-       "bbox": [
-        -81.8167,
-        33.7086,
-        -80.8135,
-        34.0253
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260626T232218Z_20260804T043002Z_S1A_30_v1.0",
-       "bbox": [
-        -80.9343,
-        33.9051,
-        -79.8914,
-        34.22
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260626T232218Z_20261021T205032Z_S1A_30_v1.0",
-       "bbox": [
-        -80.9343,
-        33.9051,
-        -79.8914,
-        34.22
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-06-22"
+     },
+     "dswx_hls": {
+      "date": "2026-06-26",
+      "days": 4.22,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260626T155819Z_20260628T024711Z_S2B_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260626T155920Z_20260628T012237Z_L8_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 0.378,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": "2026-06-19",
+      "days": -2.46,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-S1_T17SNT_20260619T233002Z_20260827T021113Z_S1A_30_v1.0",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2949811996-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-06-26",
+      "days": 4.53,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260626T232217Z_20260804T043002Z_S1A_30_v1.0",
+        "bbox": [
+         -81.8167,
+         33.7086,
+         -80.8135,
+         34.0253
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260626T232217Z_20261021T205032Z_S1A_30_v1.0",
+        "bbox": [
+         -81.8167,
+         33.7086,
+         -80.8135,
+         34.0253
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260626T232218Z_20260804T043002Z_S1A_30_v1.0",
+        "bbox": [
+         -80.9343,
+         33.9051,
+         -79.8914,
+         34.22
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260626T232218Z_20261021T205032Z_S1A_30_v1.0",
+        "bbox": [
+         -80.9343,
+         33.9051,
+         -79.8914,
+         34.22
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -270,80 +274,82 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-07-03"
-    },
-    "dswx_hls": {
-     "date": "2026-07-04",
-     "days": 1.66,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260704T155930Z_20260706T022508Z_L9_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      },
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260704T160821Z_20260706T032941Z_S2C_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": "2026-06-26",
-     "days": -6.03,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-S1_T17SNT_20260626T232146Z_20260829T155034Z_S1A_30_v1.0",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2949811996-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-07-03",
-     "days": 0.97,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260703T232137Z_20261010T090455Z_S1D_30_v1.0",
-       "bbox": [
-        -81.8198,
-        33.7081,
-        -80.8166,
-        34.0248
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260703T232138Z_20261010T090455Z_S1D_30_v1.0",
-       "bbox": [
-        -80.9374,
-        33.9045,
-        -79.8945,
-        34.2195
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-07-03"
+     },
+     "dswx_hls": {
+      "date": "2026-07-04",
+      "days": 1.66,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260704T155930Z_20260706T022508Z_L9_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260704T160821Z_20260706T032941Z_S2C_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": "2026-06-26",
+      "days": -6.03,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-S1_T17SNT_20260626T232146Z_20260829T155034Z_S1A_30_v1.0",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2949811996-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-07-03",
+      "days": 0.97,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260703T232137Z_20261010T090455Z_S1D_30_v1.0",
+        "bbox": [
+         -81.8198,
+         33.7081,
+         -80.8166,
+         34.0248
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260703T232138Z_20261010T090455Z_S1D_30_v1.0",
+        "bbox": [
+         -80.9374,
+         33.9045,
+         -79.8945,
+         34.2195
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -357,67 +363,69 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-07-04"
-    },
-    "dswx_hls": {
-     "date": "2026-07-04",
-     "days": 0.22,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260704T155930Z_20260706T022508Z_L9_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      },
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260704T160821Z_20260706T032941Z_S2C_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-07-03",
-     "days": -0.47,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260703T232137Z_20261010T090455Z_S1D_30_v1.0",
-       "bbox": [
-        -81.8198,
-        33.7081,
-        -80.8166,
-        34.0248
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260703T232138Z_20261010T090455Z_S1D_30_v1.0",
-       "bbox": [
-        -80.9374,
-        33.9045,
-        -79.8945,
-        34.2195
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-07-04"
+     },
+     "dswx_hls": {
+      "date": "2026-07-04",
+      "days": 0.22,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260704T155930Z_20260706T022508Z_L9_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260704T160821Z_20260706T032941Z_S2C_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-07-03",
+      "days": -0.47,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260703T232137Z_20261010T090455Z_S1D_30_v1.0",
+        "bbox": [
+         -81.8198,
+         33.7081,
+         -80.8166,
+         34.0248
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260703T232138Z_20261010T090455Z_S1D_30_v1.0",
+        "bbox": [
+         -80.9374,
+         33.9045,
+         -79.8945,
+         34.2195
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -431,58 +439,60 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-07-15"
-    },
-    "dswx_hls": {
-     "date": "2026-07-11",
-     "days": -3.33,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260711T155821Z_20260714T221022Z_S2C_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 0.631,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-07-15",
-     "days": 0.97,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260715T232138Z_20261010T052025Z_S1D_30_v1.0",
-       "bbox": [
-        -81.8189,
-        33.7083,
-        -80.8159,
-        34.025
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260715T232139Z_20261010T052025Z_S1D_30_v1.0",
-       "bbox": [
-        -80.9367,
-        33.9048,
-        -79.8938,
-        34.2198
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-07-15"
+     },
+     "dswx_hls": {
+      "date": "2026-07-11",
+      "days": -3.33,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260711T155821Z_20260714T221022Z_S2C_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 0.631,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-07-15",
+      "days": 0.97,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260715T232138Z_20261010T052025Z_S1D_30_v1.0",
+        "bbox": [
+         -81.8189,
+         33.7083,
+         -80.8159,
+         34.025
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260715T232139Z_20261010T052025Z_S1D_30_v1.0",
+        "bbox": [
+         -80.9367,
+         33.9048,
+         -79.8938,
+         34.2198
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -496,58 +506,60 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-07-16"
-    },
-    "dswx_hls": {
-     "date": "2026-07-11",
-     "days": -4.77,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260711T155821Z_20260714T221022Z_S2C_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 0.631,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-07-15",
-     "days": -0.47,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260715T232138Z_20261010T052025Z_S1D_30_v1.0",
-       "bbox": [
-        -81.8189,
-        33.7083,
-        -80.8159,
-        34.025
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260715T232139Z_20261010T052025Z_S1D_30_v1.0",
-       "bbox": [
-        -80.9367,
-        33.9048,
-        -79.8938,
-        34.2198
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-07-16"
+     },
+     "dswx_hls": {
+      "date": "2026-07-11",
+      "days": -4.77,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260711T155821Z_20260714T221022Z_S2C_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 0.631,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-07-15",
+      "days": -0.47,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260715T232138Z_20261010T052025Z_S1D_30_v1.0",
+        "bbox": [
+         -81.8189,
+         33.7083,
+         -80.8159,
+         34.025
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260715T232139Z_20261010T052025Z_S1D_30_v1.0",
+        "bbox": [
+         -80.9367,
+         33.9048,
+         -79.8938,
+         34.2198
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -561,67 +573,69 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-07-27"
-    },
-    "dswx_hls": {
-     "date": "2026-07-29",
-     "days": 2.65,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260729T155335Z_20260731T022502Z_L9_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      },
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260729T160829Z_20260731T030721Z_S2B_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 0.983,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-07-27",
-     "days": 0.97,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260727T232138Z_20261010T111942Z_S1D_30_v1.0",
-       "bbox": [
-        -81.8192,
-        33.7082,
-        -80.8122,
-        34.0256
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260727T232139Z_20261010T111942Z_S1D_30_v1.0",
-       "bbox": [
-        -80.9369,
-        33.9048,
-        -79.8908,
-        34.2202
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-07-27"
+     },
+     "dswx_hls": {
+      "date": "2026-07-29",
+      "days": 2.65,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260729T155335Z_20260731T022502Z_L9_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260729T160829Z_20260731T030721Z_S2B_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 0.983,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-07-27",
+      "days": 0.97,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260727T232138Z_20261010T111942Z_S1D_30_v1.0",
+        "bbox": [
+         -81.8192,
+         33.7082,
+         -80.8122,
+         34.0256
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260727T232139Z_20261010T111942Z_S1D_30_v1.0",
+        "bbox": [
+         -80.9369,
+         33.9048,
+         -79.8908,
+         34.2202
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -635,58 +649,60 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-08-20"
-    },
-    "dswx_hls": {
-     "date": "2026-08-20",
-     "days": 0.67,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260820T155821Z_20260822T041149Z_S2C_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 0.904,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-08-20",
-     "days": 0.97,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260820T232139Z_20261010T230415Z_S1D_30_v1.0",
-       "bbox": [
-        -81.82,
-        33.7084,
-        -80.813,
-        34.0258
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260820T232140Z_20261010T230415Z_S1D_30_v1.0",
-       "bbox": [
-        -80.9377,
-        33.905,
-        -79.8916,
-        34.2205
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-08-20"
+     },
+     "dswx_hls": {
+      "date": "2026-08-20",
+      "days": 0.67,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260820T155821Z_20260822T041149Z_S2C_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 0.904,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-08-20",
+      "days": 0.97,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260820T232139Z_20261010T230415Z_S1D_30_v1.0",
+        "bbox": [
+         -81.82,
+         33.7084,
+         -80.813,
+         34.0258
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260820T232140Z_20261010T230415Z_S1D_30_v1.0",
+        "bbox": [
+         -80.9377,
+         33.905,
+         -79.8916,
+         34.2205
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -700,58 +716,60 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-08-21"
-    },
-    "dswx_hls": {
-     "date": "2026-08-20",
-     "days": -0.77,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260820T155821Z_20260822T041149Z_S2C_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 0.904,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-08-20",
-     "days": -0.47,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260820T232139Z_20261010T230415Z_S1D_30_v1.0",
-       "bbox": [
-        -81.82,
-        33.7084,
-        -80.813,
-        34.0258
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260820T232140Z_20261010T230415Z_S1D_30_v1.0",
-       "bbox": [
-        -80.9377,
-        33.905,
-        -79.8916,
-        34.2205
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-08-21"
+     },
+     "dswx_hls": {
+      "date": "2026-08-20",
+      "days": -0.77,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260820T155821Z_20260822T041149Z_S2C_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 0.904,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-08-20",
+      "days": -0.47,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260820T232139Z_20261010T230415Z_S1D_30_v1.0",
+        "bbox": [
+         -81.82,
+         33.7084,
+         -80.813,
+         34.0258
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260820T232140Z_20261010T230415Z_S1D_30_v1.0",
+        "bbox": [
+         -80.9377,
+         33.905,
+         -79.8916,
+         34.2205
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -765,58 +783,60 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-09-01"
-    },
-    "dswx_hls": {
-     "date": "2026-09-06",
-     "days": 5.66,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260906T155957Z_20260908T022658Z_L9_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-09-01",
-     "days": 0.97,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260901T232140Z_20261011T074102Z_S1D_30_v1.0",
-       "bbox": [
-        -81.8193,
-        33.7085,
-        -80.8123,
-        34.0258
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260901T232141Z_20261011T074102Z_S1D_30_v1.0",
-       "bbox": [
-        -80.937,
-        33.905,
-        -79.8909,
-        34.2205
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-09-01"
+     },
+     "dswx_hls": {
+      "date": "2026-09-06",
+      "days": 5.66,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260906T155957Z_20260908T022658Z_L9_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-09-01",
+      "days": 0.97,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260901T232140Z_20261011T074102Z_S1D_30_v1.0",
+        "bbox": [
+         -81.8193,
+         33.7085,
+         -80.8123,
+         34.0258
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260901T232141Z_20261011T074102Z_S1D_30_v1.0",
+        "bbox": [
+         -80.937,
+         33.905,
+         -79.8909,
+         34.2205
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -830,58 +850,60 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-09-02"
-    },
-    "dswx_hls": {
-     "date": "2026-09-06",
-     "days": 4.22,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260906T155957Z_20260908T022658Z_L9_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-09-01",
-     "days": -0.47,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260901T232140Z_20261011T074102Z_S1D_30_v1.0",
-       "bbox": [
-        -81.8193,
-        33.7085,
-        -80.8123,
-        34.0258
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260901T232141Z_20261011T074102Z_S1D_30_v1.0",
-       "bbox": [
-        -80.937,
-        33.905,
-        -79.8909,
-        34.2205
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-09-02"
+     },
+     "dswx_hls": {
+      "date": "2026-09-06",
+      "days": 4.22,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260906T155957Z_20260908T022658Z_L9_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-09-01",
+      "days": -0.47,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260901T232140Z_20261011T074102Z_S1D_30_v1.0",
+        "bbox": [
+         -81.8193,
+         33.7085,
+         -80.8123,
+         34.0258
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260901T232141Z_20261011T074102Z_S1D_30_v1.0",
+        "bbox": [
+         -80.937,
+         33.905,
+         -79.8909,
+         34.2205
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -895,80 +917,82 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-09-13"
-    },
-    "dswx_hls": {
-     "date": "2026-09-14",
-     "days": 1.66,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260914T155952Z_20260916T101509Z_L8_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      },
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260914T161119Z_20260918T111636Z_S2B_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": "2026-09-13",
-     "days": 0.97,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-S1_T17SNT_20260913T232109Z_20261012T030315Z_S1D_30_v1.0",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2949811996-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-09-13",
-     "days": 0.97,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260913T232140Z_20261011T011233Z_S1D_30_v1.0",
-       "bbox": [
-        -81.82,
-        33.7086,
-        -80.813,
-        34.0259
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260913T232141Z_20261011T011233Z_S1D_30_v1.0",
-       "bbox": [
-        -80.9377,
-        33.9052,
-        -79.8916,
-        34.2207
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-09-13"
+     },
+     "dswx_hls": {
+      "date": "2026-09-14",
+      "days": 1.66,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260914T155952Z_20260916T101509Z_L8_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260914T161119Z_20260918T111636Z_S2B_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": "2026-09-13",
+      "days": 0.97,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-S1_T17SNT_20260913T232109Z_20261012T030315Z_S1D_30_v1.0",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2949811996-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-09-13",
+      "days": 0.97,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260913T232140Z_20261011T011233Z_S1D_30_v1.0",
+        "bbox": [
+         -81.82,
+         33.7086,
+         -80.813,
+         34.0259
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260913T232141Z_20261011T011233Z_S1D_30_v1.0",
+        "bbox": [
+         -80.9377,
+         33.9052,
+         -79.8916,
+         34.2207
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -982,80 +1006,82 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-09-14"
-    },
-    "dswx_hls": {
-     "date": "2026-09-14",
-     "days": 0.22,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260914T155952Z_20260916T101509Z_L8_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      },
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260914T161119Z_20260918T111636Z_S2B_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": "2026-09-13",
-     "days": -0.47,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-S1_T17SNT_20260913T232109Z_20261012T030315Z_S1D_30_v1.0",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2949811996-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-09-13",
-     "days": -0.47,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260913T232140Z_20261011T011233Z_S1D_30_v1.0",
-       "bbox": [
-        -81.82,
-        33.7086,
-        -80.813,
-        34.0259
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260913T232141Z_20261011T011233Z_S1D_30_v1.0",
-       "bbox": [
-        -80.9377,
-        33.9052,
-        -79.8916,
-        34.2207
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-09-14"
+     },
+     "dswx_hls": {
+      "date": "2026-09-14",
+      "days": 0.22,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260914T155952Z_20260916T101509Z_L8_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260914T161119Z_20260918T111636Z_S2B_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": "2026-09-13",
+      "days": -0.47,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-S1_T17SNT_20260913T232109Z_20261012T030315Z_S1D_30_v1.0",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2949811996-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-09-13",
+      "days": -0.47,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260913T232140Z_20261011T011233Z_S1D_30_v1.0",
+        "bbox": [
+         -81.82,
+         33.7086,
+         -80.813,
+         34.0259
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260913T232141Z_20261011T011233Z_S1D_30_v1.0",
+        "bbox": [
+         -80.9377,
+         33.9052,
+         -79.8916,
+         34.2207
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -1069,71 +1095,73 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-09-25"
-    },
-    "dswx_hls": {
-     "date": "2026-09-29",
-     "days": 4.67,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260929T160041Z_20261003T234840Z_S2C_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 0.997,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": "2026-09-25",
-     "days": 0.97,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-S1_T17SNT_20260925T232109Z_20261012T125511Z_S1D_30_v1.0",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2949811996-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-09-25",
-     "days": 0.97,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260925T232141Z_20261011T050228Z_S1D_30_v1.0",
-       "bbox": [
-        -81.8195,
-        33.7084,
-        -80.8125,
-        34.0258
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260925T232141Z_20261011T050228Z_S1D_30_v1.0",
-       "bbox": [
-        -80.9372,
-        33.905,
-        -79.891,
-        34.2205
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-09-25"
+     },
+     "dswx_hls": {
+      "date": "2026-09-29",
+      "days": 4.67,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260929T160041Z_20261003T234840Z_S2C_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 0.997,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": "2026-09-25",
+      "days": 0.97,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-S1_T17SNT_20260925T232109Z_20261012T125511Z_S1D_30_v1.0",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2949811996-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-09-25",
+      "days": 0.97,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260925T232141Z_20261011T050228Z_S1D_30_v1.0",
+        "bbox": [
+         -81.8195,
+         33.7084,
+         -80.8125,
+         34.0258
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260925T232141Z_20261011T050228Z_S1D_30_v1.0",
+        "bbox": [
+         -80.9372,
+         33.905,
+         -79.891,
+         34.2205
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -1147,71 +1175,73 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-09-26"
-    },
-    "dswx_hls": {
-     "date": "2026-09-29",
-     "days": 3.23,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20260929T160041Z_20261003T234840Z_S2C_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 0.997,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": "2026-09-25",
-     "days": -0.47,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-S1_T17SNT_20260925T232109Z_20261012T125511Z_S1D_30_v1.0",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2949811996-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": "2026-09-25",
-     "days": -0.47,
-     "granules": [
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260925T232141Z_20261011T050228Z_S1D_30_v1.0",
-       "bbox": [
-        -81.8195,
-        33.7084,
-        -80.8125,
-        34.0258
-       ]
-      },
-      {
-       "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260925T232141Z_20261011T050228Z_S1D_30_v1.0",
-       "bbox": [
-        -80.9372,
-        33.905,
-        -79.891,
-        34.2205
-       ]
-      }
-     ],
-     "collection": "C2777436413-ASF",
-     "coverage": 1.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-09-26"
+     },
+     "dswx_hls": {
+      "date": "2026-09-29",
+      "days": 3.23,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20260929T160041Z_20261003T234840Z_S2C_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 0.997,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": "2026-09-25",
+      "days": -0.47,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-S1_T17SNT_20260925T232109Z_20261012T125511Z_S1D_30_v1.0",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2949811996-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-09-25",
+      "days": -0.47,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW1_20260925T232141Z_20261011T050228Z_S1D_30_v1.0",
+        "bbox": [
+         -81.8195,
+         33.7084,
+         -80.8125,
+         34.0258
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T150-320240-IW2_20260925T232141Z_20261011T050228Z_S1D_30_v1.0",
+        "bbox": [
+         -80.9372,
+         33.905,
+         -79.891,
+         34.2205
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -1334,67 +1364,69 @@
     }
    ],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-10-07"
-    },
-    "dswx_hls": {
-     "date": "2026-10-01",
-     "days": -5.33,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20261001T155355Z_20261003T033426Z_L9_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      },
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20261001T160701Z_20261003T073002Z_S2A_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      },
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20261001T160701Z_20261015T053805Z_S2A_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": "2026-09-30",
-     "days": -6.03,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-S1_T17SNT_20260930T232925Z_20261012T060255Z_S1D_30_v1.0",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2949811996-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-10-07"
+     },
+     "dswx_hls": {
+      "date": "2026-10-01",
+      "days": -5.33,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20261001T155355Z_20261003T033426Z_L9_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20261001T160701Z_20261003T073002Z_S2A_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20261001T160701Z_20261015T053805Z_S2A_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": "2026-09-30",
+      "days": -6.03,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-S1_T17SNT_20260930T232925Z_20261012T060255Z_S1D_30_v1.0",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2949811996-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -1463,54 +1495,56 @@
     }
    ],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-10-08"
-    },
-    "dswx_hls": {
-     "date": "2026-10-01",
-     "days": -6.77,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20261001T155355Z_20261003T033426Z_L9_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      },
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20261001T160701Z_20261003T073002Z_S2A_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      },
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20261001T160701Z_20261015T053805Z_S2A_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-10-08"
+     },
+     "dswx_hls": {
+      "date": "2026-10-01",
+      "days": -6.77,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20261001T155355Z_20261003T033426Z_L9_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20261001T160701Z_20261003T073002Z_S2A_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20261001T160701Z_20261015T053805Z_S2A_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     }
     }
    }
   },
@@ -1524,36 +1558,38 @@
    "dswx_ni": null,
    "dswx_ni_tiles": [],
    "gibs": {
-    "nisar_gcov": {
-     "date": "2026-10-20"
-    },
-    "dswx_hls": {
-     "date": "2026-10-21",
-     "days": 1.23,
-     "granules": [
-      {
-       "name": "OPERA_L3_DSWx-HLS_T17SNT_20261021T160701Z_20261023T065121Z_S2A_30_v1.1",
-       "bbox": [
-        -81.0533,
-        33.3901,
-        -79.859,
-        34.3855
-       ]
-      }
-     ],
-     "collection": "C2617126679-POCLOUD",
-     "coverage": 1.0,
-     "window_days": 7
-    },
-    "dswx_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
-    },
-    "rtc_s1": {
-     "date": null,
-     "coverage": 0.0,
-     "window_days": 7
+    "congaree-national-park-wilderness": {
+     "nisar_gcov": {
+      "date": "2026-10-20"
+     },
+     "dswx_hls": {
+      "date": "2026-10-21",
+      "days": 1.23,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T17SNT_20261021T160701Z_20261023T065121Z_S2A_30_v1.1",
+        "bbox": [
+         -81.0533,
+         33.3901,
+         -79.859,
+         34.3855
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     }
     }
    }
   }

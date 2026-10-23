@@ -13,8 +13,14 @@
  },
  {
   "name": "oregon_lakes",
-  "title": "Summer Lake and Lake Abert, OR",
-  "description": "Ascending and descending nisar-water time series over two shallow, fluctuating lakes.",
+  "title": "South-central Oregon lakes and marshes",
+  "description": "Ascending and descending nisar-water time series over Summer Lake, Lake Abert, Warner Lakes and Sycan Marsh.",
+  "kind": "timeseries"
+ },
+ {
+  "name": "central_valley",
+  "title": "Sacramento Valley, CA",
+  "description": "Ascending and descending nisar-water time series over Central Valley agriculture in Colusa and Yolo counties.",
   "kind": "timeseries"
  }
 ]

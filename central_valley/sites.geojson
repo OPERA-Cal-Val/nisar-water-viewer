@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"site_id": "central-valley-agriculture", "label": "Central Valley agriculture, CA"}, "geometry": {"type": "Polygon", "coordinates": [[[-122.2321, 39.1422], [-122.265, 38.9859], [-122.0547, 38.9678], [-121.8692, 39.0456], [-121.9223, 39.1516], [-122.2321, 39.1422]]]}}]}
