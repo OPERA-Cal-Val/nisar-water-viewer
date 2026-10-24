@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"site_id": "oregon-spotted-frog", "label": "Oregon Spotted Frog, OR"}, "geometry": {"type": "Polygon", "coordinates": [[[-121.393937, 43.971556], [-121.395149, 43.926555], [-121.457413, 43.927413], [-121.456249, 43.972415], [-121.393937, 43.971556]]]}}]}

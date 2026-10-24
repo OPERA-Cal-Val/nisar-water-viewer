@@ -1,0 +1,868 @@
+{
+ "name": "blackwater",
+ "title": "Blackwater National Wildlife Refuge, MD",
+ "description": "Ascending nisar-water time series over the tidal marshes of Blackwater National Wildlife Refuge (inundated vegetation).",
+ "kind": "timeseries",
+ "nisar_water_runs": {
+  "dev-45698ac": 9
+ },
+ "dswx_ni_versions": {},
+ "built": "2026-10-24 09:48 PDT",
+ "sites": [
+  {
+   "id": "blackwater-nwr",
+   "label": "Blackwater NWR, MD",
+   "bbox": [
+    -76.17435,
+    38.39251,
+    -76.11637,
+    38.43812
+   ],
+   "info": {
+    "state": "MD",
+    "frames": {
+     "A": "T162_F021_A"
+    }
+   },
+   "scenes": [
+    "T162_F021_A__2026-06-25",
+    "T162_F021_A__2026-07-07",
+    "T162_F021_A__2026-07-19",
+    "T162_F021_A__2026-08-12",
+    "T162_F021_A__2026-08-24",
+    "T162_F021_A__2026-09-05",
+    "T162_F021_A__2026-09-17",
+    "T162_F021_A__2026-09-29",
+    "T162_F021_A__2026-10-11"
+   ]
+  }
+ ],
+ "scenes": {
+  "T162_F021_A__2026-06-25": {
+   "frame_id": "T162_F021_A",
+   "direction": "A",
+   "date": "2026-06-25",
+   "acq_utc": "2026-06-25T10:14:48Z",
+   "granule_id": "NISAR_L2_PR_GCOV_023_162_A_021_4005_DHDH_A_20260625T101448_20260625T101521_P05023_N_F_J_001",
+   "nisar_water": "nisar-water/dev-45698ac/T162_F021_A__2026-06-25_WTR.tif",
+   "dswx_ni": null,
+   "dswx_ni_tiles": [],
+   "gibs": {
+    "blackwater-nwr": {
+     "nisar_gcov": {
+      "date": "2026-06-25"
+     },
+     "dswx_hls": {
+      "date": "2026-06-18",
+      "days": -6.76,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SUH_20260618T154811Z_20260727T182236Z_S2C_30_v1.1",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": "2026-06-23",
+      "days": -1.47,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-S1_T18SUH_20260623T225835Z_20260828T220746Z_S1A_30_v1.0",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-S1_T18SVH_20260623T225835Z_20260828T220746Z_S1A_30_v1.0",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       }
+      ],
+      "collection": "C2949811996-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-06-28",
+      "days": 3.54,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006667-IW3_20260628T230659Z_20260804T055159Z_S1A_30_v1.0",
+        "bbox": [
+         -76.7404,
+         38.1646,
+         -75.7826,
+         38.45
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006667-IW3_20260628T230659Z_20261021T210713Z_S1A_30_v1.0",
+        "bbox": [
+         -76.7404,
+         38.1646,
+         -75.7826,
+         38.45
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006668-IW3_20260628T230701Z_20260804T055159Z_S1A_30_v1.0",
+        "bbox": [
+         -76.7764,
+         38.33,
+         -75.8165,
+         38.6158
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006668-IW3_20260628T230701Z_20261021T210713Z_S1A_30_v1.0",
+        "bbox": [
+         -76.7764,
+         38.33,
+         -75.8165,
+         38.6158
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
+    }
+   }
+  },
+  "T162_F021_A__2026-07-07": {
+   "frame_id": "T162_F021_A",
+   "direction": "A",
+   "date": "2026-07-07",
+   "acq_utc": "2026-07-07T10:14:47Z",
+   "granule_id": "NISAR_L2_PR_GCOV_024_162_A_021_4005_DHDH_A_20260707T101447_20260707T101520_P05023_N_F_J_001",
+   "nisar_water": "nisar-water/dev-45698ac/T162_F021_A__2026-07-07_WTR.tif",
+   "dswx_ni": null,
+   "dswx_ni_tiles": [],
+   "gibs": {
+    "blackwater-nwr": {
+     "nisar_gcov": {
+      "date": "2026-07-07"
+     },
+     "dswx_hls": {
+      "date": "2026-07-03",
+      "days": -3.76,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SUH_20260703T154809Z_20260705T021157Z_S2B_30_v1.1",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SVH_20260703T154809Z_20260720T223511Z_S2B_30_v1.1",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 0.967,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-07-12",
+      "days": 5.53,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T106-225758-IW1_20260712T225810Z_20261010T061241Z_S1D_30_v1.0",
+        "bbox": [
+         -76.6853,
+         38.1654,
+         -75.6507,
+         38.4769
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T106-225759-IW1_20260712T225813Z_20261010T061241Z_S1D_30_v1.0",
+        "bbox": [
+         -76.7262,
+         38.331,
+         -75.6892,
+         38.6429
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
+    }
+   }
+  },
+  "T162_F021_A__2026-07-19": {
+   "frame_id": "T162_F021_A",
+   "direction": "A",
+   "date": "2026-07-19",
+   "acq_utc": "2026-07-19T10:14:47Z",
+   "granule_id": "NISAR_L2_PR_GCOV_025_162_A_021_4005_DHDH_A_20260719T101447_20260719T101519_P05023_N_F_J_001",
+   "nisar_water": "nisar-water/dev-45698ac/T162_F021_A__2026-07-19_WTR.tif",
+   "dswx_ni": null,
+   "dswx_ni_tiles": [],
+   "gibs": {
+    "blackwater-nwr": {
+     "nisar_gcov": {
+      "date": "2026-07-19"
+     },
+     "dswx_hls": {
+      "date": "2026-07-20",
+      "days": 1.23,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SUH_20260720T155711Z_20260727T175148Z_S2A_30_v1.1",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SVH_20260720T153809Z_20260728T042105Z_S2B_30_v1.1",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SVH_20260720T155711Z_20260727T175130Z_S2A_30_v1.1",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-07-17",
+      "days": -1.46,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006667-IW3_20260717T230620Z_20261010T144213Z_S1D_30_v1.0",
+        "bbox": [
+         -76.7434,
+         38.1642,
+         -75.7858,
+         38.4496
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006668-IW3_20260717T230623Z_20261010T144213Z_S1D_30_v1.0",
+        "bbox": [
+         -76.7795,
+         38.3297,
+         -75.8197,
+         38.6155
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
+    }
+   }
+  },
+  "T162_F021_A__2026-08-12": {
+   "frame_id": "T162_F021_A",
+   "direction": "A",
+   "date": "2026-08-12",
+   "acq_utc": "2026-08-12T10:14:46Z",
+   "granule_id": "NISAR_L2_PR_GCOV_027_162_A_021_4005_DHDH_A_20260812T101446_20260812T101518_P05023_N_F_J_001",
+   "nisar_water": "nisar-water/dev-45698ac/T162_F021_A__2026-08-12_WTR.tif",
+   "dswx_ni": null,
+   "dswx_ni_tiles": [],
+   "gibs": {
+    "blackwater-nwr": {
+     "nisar_gcov": {
+      "date": "2026-08-12"
+     },
+     "dswx_hls": {
+      "date": "2026-08-07",
+      "days": -4.76,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SUH_20260807T154615Z_20260809T022426Z_L9_30_v1.1",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SUH_20260807T154811Z_20260809T044216Z_S2C_30_v1.1",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SVH_20260807T154615Z_20260809T022402Z_L9_30_v1.1",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SVH_20260807T154811Z_20260809T032242Z_S2C_30_v1.1",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-08-10",
+      "days": -1.46,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006667-IW3_20260810T230621Z_20261010T165252Z_S1D_30_v1.0",
+        "bbox": [
+         -76.743,
+         38.1641,
+         -75.7853,
+         38.4499
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006668-IW3_20260810T230624Z_20261010T165252Z_S1D_30_v1.0",
+        "bbox": [
+         -76.779,
+         38.3299,
+         -75.8193,
+         38.6157
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
+    }
+   }
+  },
+  "T162_F021_A__2026-08-24": {
+   "frame_id": "T162_F021_A",
+   "direction": "A",
+   "date": "2026-08-24",
+   "acq_utc": "2026-08-24T10:14:45Z",
+   "granule_id": "NISAR_L2_PR_GCOV_028_162_A_021_4005_DHDH_A_20260824T101445_20260824T101517_P05023_N_F_J_001",
+   "nisar_water": "nisar-water/dev-45698ac/T162_F021_A__2026-08-24_WTR.tif",
+   "dswx_ni": null,
+   "dswx_ni_tiles": [],
+   "gibs": {
+    "blackwater-nwr": {
+     "nisar_gcov": {
+      "date": "2026-08-24"
+     },
+     "dswx_hls": {
+      "date": "2026-08-24",
+      "days": 0.23,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SUH_20260824T154003Z_20260901T184942Z_L8_30_v1.1",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SVH_20260824T153811Z_20260904T225138Z_S2C_30_v1.1",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SVH_20260824T154003Z_20260901T184949Z_L8_30_v1.1",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-08-22",
+      "days": -1.46,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006667-IW3_20260822T230621Z_20261010T222911Z_S1D_30_v1.0",
+        "bbox": [
+         -76.7441,
+         38.1645,
+         -75.7864,
+         38.45
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006668-IW3_20260822T230624Z_20261010T222911Z_S1D_30_v1.0",
+        "bbox": [
+         -76.7801,
+         38.33,
+         -75.8203,
+         38.6158
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
+    }
+   }
+  },
+  "T162_F021_A__2026-09-05": {
+   "frame_id": "T162_F021_A",
+   "direction": "A",
+   "date": "2026-09-05",
+   "acq_utc": "2026-09-05T10:14:45Z",
+   "granule_id": "NISAR_L2_PR_GCOV_029_162_A_021_4005_DHDH_A_20260905T101445_20260905T101517_P05023_N_F_J_002",
+   "nisar_water": "nisar-water/dev-45698ac/T162_F021_A__2026-09-05_WTR.tif",
+   "dswx_ni": null,
+   "dswx_ni_tiles": [],
+   "gibs": {
+    "blackwater-nwr": {
+     "nisar_gcov": {
+      "date": "2026-09-05"
+     },
+     "dswx_hls": {
+      "date": "2026-09-06",
+      "days": 1.24,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SUH_20260906T154811Z_20260908T033252Z_S2C_30_v1.1",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SVH_20260906T154811Z_20260908T033258Z_S2C_30_v1.1",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": null,
+      "coverage": 0.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-09-03",
+      "days": -1.46,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006667-IW3_20260903T230622Z_20261011T062820Z_S1D_30_v1.0",
+        "bbox": [
+         -76.7437,
+         38.1647,
+         -75.7861,
+         38.4503
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006668-IW3_20260903T230625Z_20261011T062820Z_S1D_30_v1.0",
+        "bbox": [
+         -76.7798,
+         38.3303,
+         -75.82,
+         38.6161
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
+    }
+   }
+  },
+  "T162_F021_A__2026-09-17": {
+   "frame_id": "T162_F021_A",
+   "direction": "A",
+   "date": "2026-09-17",
+   "acq_utc": "2026-09-17T10:14:45Z",
+   "granule_id": "NISAR_L2_PR_GCOV_030_162_A_021_4005_DHDH_A_20260917T101445_20260917T101517_P05023_N_F_J_001",
+   "nisar_water": "nisar-water/dev-45698ac/T162_F021_A__2026-09-17_WTR.tif",
+   "dswx_ni": null,
+   "dswx_ni_tiles": [],
+   "gibs": {
+    "blackwater-nwr": {
+     "nisar_gcov": {
+      "date": "2026-09-17"
+     },
+     "dswx_hls": {
+      "date": "2026-09-17",
+      "days": 0.23,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SUH_20260917T154014Z_20260919T022838Z_L9_30_v1.1",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SVH_20260917T154014Z_20260919T041406Z_L9_30_v1.1",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 0.997,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": "2026-09-15",
+      "days": -1.46,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-S1_T18SUH_20260915T230614Z_20261012T030331Z_S1D_30_v1.0",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-S1_T18SVH_20260915T230614Z_20261012T030331Z_S1D_30_v1.0",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       }
+      ],
+      "collection": "C2949811996-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-09-15",
+      "days": -1.46,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006667-IW3_20260915T230622Z_20261011T003532Z_S1D_30_v1.0",
+        "bbox": [
+         -76.7445,
+         38.1647,
+         -75.7868,
+         38.4502
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006668-IW3_20260915T230625Z_20261011T003532Z_S1D_30_v1.0",
+        "bbox": [
+         -76.7806,
+         38.3302,
+         -75.8208,
+         38.6161
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
+    }
+   }
+  },
+  "T162_F021_A__2026-09-29": {
+   "frame_id": "T162_F021_A",
+   "direction": "A",
+   "date": "2026-09-29",
+   "acq_utc": "2026-09-29T10:14:45Z",
+   "granule_id": "NISAR_L2_PR_GCOV_031_162_A_021_4005_DHDH_A_20260929T101445_20260929T101517_P05023_N_F_J_001",
+   "nisar_water": "nisar-water/dev-45698ac/T162_F021_A__2026-09-29_WTR.tif",
+   "dswx_ni": null,
+   "dswx_ni_tiles": [],
+   "gibs": {
+    "blackwater-nwr": {
+     "nisar_gcov": {
+      "date": "2026-09-29"
+     },
+     "dswx_hls": {
+      "date": "2026-10-02",
+      "days": 3.23,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SUH_20261002T154628Z_20261004T013353Z_L8_30_v1.1",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SVH_20261002T154628Z_20261004T013353Z_L8_30_v1.1",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": "2026-09-27",
+      "days": -1.46,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-S1_T18SUH_20260927T230614Z_20261012T092920Z_S1D_30_v1.0",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-S1_T18SVH_20260927T230614Z_20261012T092920Z_S1D_30_v1.0",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       }
+      ],
+      "collection": "C2949811996-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-09-27",
+      "days": -1.46,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006667-IW3_20260927T230622Z_20261011T034735Z_S1D_30_v1.0",
+        "bbox": [
+         -76.7429,
+         38.1645,
+         -75.7853,
+         38.4501
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006668-IW3_20260927T230625Z_20261011T034735Z_S1D_30_v1.0",
+        "bbox": [
+         -76.779,
+         38.3301,
+         -75.8192,
+         38.6159
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
+    }
+   }
+  },
+  "T162_F021_A__2026-10-11": {
+   "frame_id": "T162_F021_A",
+   "direction": "A",
+   "date": "2026-10-11",
+   "acq_utc": "2026-10-11T10:14:46Z",
+   "granule_id": "NISAR_L2_PR_GCOV_032_162_A_021_4005_DHDH_A_20261011T101446_20261011T101517_P05023_N_F_J_001",
+   "nisar_water": "nisar-water/dev-45698ac/T162_F021_A__2026-10-11_WTR.tif",
+   "dswx_ni": null,
+   "dswx_ni_tiles": [],
+   "gibs": {
+    "blackwater-nwr": {
+     "nisar_gcov": {
+      "date": "2026-10-11"
+     },
+     "dswx_hls": {
+      "date": "2026-10-08",
+      "days": -2.76,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SUH_20261008T155701Z_20261010T112218Z_S2A_30_v1.1",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SVH_20261008T154139Z_20261010T055102Z_S2B_30_v1.1",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-HLS_T18SVH_20261008T155701Z_20261010T112245Z_S2A_30_v1.1",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       }
+      ],
+      "collection": "C2617126679-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "dswx_s1": {
+      "date": "2026-10-09",
+      "days": -1.46,
+      "granules": [
+       {
+        "name": "OPERA_L3_DSWx-S1_T18SUH_20261009T230614Z_20261012T233344Z_S1D_30_v1.0",
+        "bbox": [
+         -77.3618,
+         37.8804,
+         -76.0817,
+         38.8878
+        ]
+       },
+       {
+        "name": "OPERA_L3_DSWx-S1_T18SVH_20261009T230614Z_20261012T233344Z_S1D_30_v1.0",
+        "bbox": [
+         -76.2095,
+         37.8974,
+         -74.9435,
+         38.893
+        ]
+       }
+      ],
+      "collection": "C2949811996-POCLOUD",
+      "coverage": 1.0,
+      "window_days": 7
+     },
+     "rtc_s1": {
+      "date": "2026-10-09",
+      "days": -1.46,
+      "granules": [
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006667-IW3_20261009T230623Z_20261011T093729Z_S1D_30_v1.0",
+        "bbox": [
+         -76.743,
+         38.1645,
+         -75.7853,
+         38.45
+        ]
+       },
+       {
+        "name": "OPERA_L2_RTC-S1_T004-006668-IW3_20261009T230625Z_20261011T093729Z_S1D_30_v1.0",
+        "bbox": [
+         -76.779,
+         38.33,
+         -75.8192,
+         38.6159
+        ]
+       }
+      ],
+      "collection": "C2777436413-ASF",
+      "coverage": 1.0,
+      "window_days": 7
+     }
+    }
+   }
+  }
+ }
+}

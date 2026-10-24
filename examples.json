@@ -22,5 +22,23 @@
   "title": "Sacramento Valley, CA",
   "description": "Ascending and descending nisar-water time series over Central Valley agriculture in Colusa and Yolo counties.",
   "kind": "timeseries"
+ },
+ {
+  "name": "oregon_spotted_frog",
+  "title": "Oregon Spotted Frog site, OR",
+  "description": "Ascending and descending nisar-water time series over a small Oregon spotted frog wetland site (a minimum-resolution test).",
+  "kind": "timeseries"
+ },
+ {
+  "name": "leetown",
+  "title": "Leetown Science Center, WV",
+  "description": "Ascending and descending nisar-water time series over the Leetown Science Center (a minimum-resolution test).",
+  "kind": "timeseries"
+ },
+ {
+  "name": "blackwater",
+  "title": "Blackwater National Wildlife Refuge, MD",
+  "description": "Ascending nisar-water time series over the tidal marshes of Blackwater National Wildlife Refuge (inundated vegetation).",
+  "kind": "timeseries"
  }
 ]

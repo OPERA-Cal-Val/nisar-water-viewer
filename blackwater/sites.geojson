@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"site_id": "blackwater-nwr", "label": "Blackwater NWR, MD"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.117066, 38.438123], [-76.116372, 38.39307], [-76.173617, 38.392511], [-76.174346, 38.437563], [-76.117066, 38.438123]]]}}]}
